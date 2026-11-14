@@ -12,7 +12,7 @@ The build continues the work saved by Astra and three coding agents on `codex/pr
 | Ownership and security | Contract tests and local integration passed. Active obligations block transfer. The former owner loses management rights and keeps earnings. The buyer reactivates. |
 | Inference | Fixture mode exercised in app and tests. One real NEAR AI research job succeeded and passed all checks. See `docs/evidence/live-research.json`. |
 | Frontend | Production build passed. Browser mint, activation and private report verified in the local demo. Added a shared logo and browser assets, route metadata, and refinements to guided demo and account loading. Chrome confirmed app icon links and the browser title. Native light/dark tab-strip inspection remains pending. |
-| Testnet | Read-only query at block 277649659 confirmed 10 testnet NEAR and an empty target account. Reviewed gas and storage estimates are current for that block. Deployment, restricted service accounts, live wallet flow and testnet settlement evidence remain pending. |
+| Testnet | At finalized block 277650642 the funding parent held 10 testnet NEAR and the contract subaccount did not exist. All 29 tests passed again, the release WASM hash matched, and the five-action unsigned deployment to the dedicated child was decoded and verified. Deployment approval, service accounts, wallet flow and onchain settlement evidence remain pending. |
 | Public release | GitHub push, hosting, X video and submission are pending user decisions. |
 
 See [TEST_RESULTS.md](TEST_RESULTS.md), [DEMO_EVIDENCE.md](DEMO_EVIDENCE.md) and [TESTNET_REVIEW.md](TESTNET_REVIEW.md).
