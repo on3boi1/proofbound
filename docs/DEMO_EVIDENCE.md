@@ -8,4 +8,5 @@
 | Provider | [Live research receipt](evidence/live-research.json) captures one completed bounded NEAR AI research job with 1,631 tokens, source and output hashes, and passing verification. |
 | Contract | 29 tests passed. The release artifact and hash are in [TESTNET_REVIEW.md](TESTNET_REVIEW.md). |
 | [Finalized testnet deployment](evidence/testnet-deployment.json) | The dedicated contract was created, funded with 4.25 testnet NEAR, deployed and initialized. Recorded fee is 0.011949535241688 testnet NEAR. Initial NFT supply is zero. No testnet lifecycle transactions have run. |
+| [Finalized testnet service setup](evidence/testnet-service-setup.json) | Both role accounts received 0.20 testnet NEAR and have the verified recovery and bounded service keys. Combined fees were 0.014271039756661 testnet NEAR. These receipts cover account setup. |
 | Public demo post | Pending human recording and publication. |

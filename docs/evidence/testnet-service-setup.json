@@ -1,0 +1,201 @@
+{
+  "network": "testnet",
+  "signer": "proofbound-dev-2026.testnet",
+  "contract": "contract.proofbound-dev-2026.testnet",
+  "contractCodeHash": "FEzmypQteUoXXFZ2UAme6nZ8HhtTxAsKjCCA9xGRFWuP",
+  "preflightBlock": {
+    "height": 277677538,
+    "hash": "CTxr5nuM8HszG7LYwQEZ93VqdTgzMAK5ZMk5MgGXiimY"
+  },
+  "finalizedStateBlock": {
+    "height": 277677678,
+    "hash": "HYAfcG9BvmVjfAu1vGWd5q5ZzN43cJPUijntNMSdA8mK"
+  },
+  "fundingYocto": "400000000000000000000000",
+  "feeCeilingYocto": "20000000000000000000000",
+  "actualFeesYocto": "14271039756661000000000",
+  "parentBeforeYocto": "5738050464758312000000000",
+  "parentAfter": {
+    "amountYocto": "5323779425001651000000000",
+    "lockedYocto": "0",
+    "storageBytes": 182,
+    "storageReserveYocto": "1820000000000000000000",
+    "liquidAfterStorageYocto": "5321959425001651000000000"
+  },
+  "contractBalance": {
+    "amountYocto": "4250000000000000000000000",
+    "lockedYocto": "0",
+    "storageBytes": 396490,
+    "storageReserveYocto": "3964900000000000000000000",
+    "liquidAfterStorageYocto": "285100000000000000000000"
+  },
+  "customerStatus": "UNKNOWN_ACCOUNT",
+  "services": [
+    {
+      "role": "executor",
+      "accountId": "exec.proofbound-dev-2026.testnet",
+      "txHash": "HJeTtHt5bGubBzQGnYRS1XT8U2giXEEhibYRnmusDphk",
+      "explorer": "https://testnet.nearblocks.io/txns/HJeTtHt5bGubBzQGnYRS1XT8U2giXEEhibYRnmusDphk",
+      "status": "FINAL",
+      "outcome": {
+        "SuccessValue": ""
+      },
+      "transactionBlockHash": "Amj2edgBg6ThszqViJd4mg9otpPDiNeVY4e38mVCTkJX",
+      "actions": [
+        "CreateAccount",
+        {
+          "Transfer": {
+            "deposit": "200000000000000000000000"
+          }
+        },
+        {
+          "AddKey": {
+            "access_key": {
+              "nonce": 0,
+              "permission": "FullAccess"
+            },
+            "public_key": "ed25519:FNjvjHjhvV252B3uQm844fjPHDRBFRz8tah8cLWGLi72"
+          }
+        },
+        {
+          "AddKey": {
+            "access_key": {
+              "nonce": 0,
+              "permission": {
+                "FunctionCall": {
+                  "allowance": "50000000000000000000000",
+                  "method_names": [
+                    "start_job",
+                    "submit_result"
+                  ],
+                  "receiver_id": "contract.proofbound-dev-2026.testnet"
+                }
+              }
+            },
+            "public_key": "ed25519:GNRAPM1j3a3tu4wvzNTzJWPWDYANVGRwYJREhEwKDa8X"
+          }
+        }
+      ],
+      "gasBurnt": "8778703804604",
+      "tokensBurntYocto": "7135552124210400000000",
+      "receiptIds": [
+        "8q8Z7Erq8oqQ5StitaipvpSB3EPfAA1QDeH2VdxiFbWa",
+        "4YvpFPc8USq7tbvwjfiBtHA6QHbHrMNQt8Bajq6nQSzP"
+      ],
+      "balance": {
+        "amountYocto": "200000000000000000000000",
+        "lockedYocto": "0",
+        "storageBytes": 355,
+        "storageReserveYocto": "3550000000000000000000",
+        "liquidAfterStorageYocto": "196450000000000000000000"
+      },
+      "accessKeys": [
+        {
+          "access_key": {
+            "nonce": 277677580000000,
+            "permission": "FullAccess"
+          },
+          "public_key": "ed25519:FNjvjHjhvV252B3uQm844fjPHDRBFRz8tah8cLWGLi72"
+        },
+        {
+          "access_key": {
+            "nonce": 277677580000000,
+            "permission": {
+              "FunctionCall": {
+                "allowance": "50000000000000000000000",
+                "method_names": [
+                  "start_job",
+                  "submit_result"
+                ],
+                "receiver_id": "contract.proofbound-dev-2026.testnet"
+              }
+            }
+          },
+          "public_key": "ed25519:GNRAPM1j3a3tu4wvzNTzJWPWDYANVGRwYJREhEwKDa8X"
+        }
+      ]
+    },
+    {
+      "role": "verifier",
+      "accountId": "verify.proofbound-dev-2026.testnet",
+      "txHash": "UHD3DWioXsSVrycs2JznPgSk9qCQ37LqjoD3BMFujaW",
+      "explorer": "https://testnet.nearblocks.io/txns/UHD3DWioXsSVrycs2JznPgSk9qCQ37LqjoD3BMFujaW",
+      "status": "FINAL",
+      "outcome": {
+        "SuccessValue": ""
+      },
+      "transactionBlockHash": "CwkXPkpry5ko5temXvQEHvrUZASUJMjZugTXGeb5ebdd",
+      "actions": [
+        "CreateAccount",
+        {
+          "Transfer": {
+            "deposit": "200000000000000000000000"
+          }
+        },
+        {
+          "AddKey": {
+            "access_key": {
+              "nonce": 0,
+              "permission": "FullAccess"
+            },
+            "public_key": "ed25519:FNjvjHjhvV252B3uQm844fjPHDRBFRz8tah8cLWGLi72"
+          }
+        },
+        {
+          "AddKey": {
+            "access_key": {
+              "nonce": 0,
+              "permission": {
+                "FunctionCall": {
+                  "allowance": "50000000000000000000000",
+                  "method_names": [
+                    "verify_job"
+                  ],
+                  "receiver_id": "contract.proofbound-dev-2026.testnet"
+                }
+              }
+            },
+            "public_key": "ed25519:Ey3AjZr3wjecLKfc7t54L1d6nUXdKCyTNSce9BV9VfX2"
+          }
+        }
+      ],
+      "gasBurnt": "8778058887006",
+      "tokensBurntYocto": "7135487632450600000000",
+      "receiptIds": [
+        "5ZH4Jibxmo97VWmTJkDKPqDdGrsBtJ5nYYfEyhKDqVc9",
+        "BpBdSidNhHrLK5vc4fVuHchxyBeK1KXCK9rUmxmUgRrk"
+      ],
+      "balance": {
+        "amountYocto": "200000000000000000000000",
+        "lockedYocto": "0",
+        "storageBytes": 339,
+        "storageReserveYocto": "3390000000000000000000",
+        "liquidAfterStorageYocto": "196610000000000000000000"
+      },
+      "accessKeys": [
+        {
+          "access_key": {
+            "nonce": 277677613000000,
+            "permission": {
+              "FunctionCall": {
+                "allowance": "50000000000000000000000",
+                "method_names": [
+                  "verify_job"
+                ],
+                "receiver_id": "contract.proofbound-dev-2026.testnet"
+              }
+            }
+          },
+          "public_key": "ed25519:Ey3AjZr3wjecLKfc7t54L1d6nUXdKCyTNSce9BV9VfX2"
+        },
+        {
+          "access_key": {
+            "nonce": 277677613000000,
+            "permission": "FullAccess"
+          },
+          "public_key": "ed25519:FNjvjHjhvV252B3uQm844fjPHDRBFRz8tah8cLWGLi72"
+        }
+      ]
+    }
+  ]
+}

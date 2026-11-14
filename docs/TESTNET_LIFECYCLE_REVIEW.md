@@ -1,16 +1,15 @@
 # Proposed testnet mint-to-settlement run
 
-The dedicated contract is deployed at `contract.proofbound-dev-2026.testnet`. Its initial NFT supply is zero, and the configured executor and verifier accounts do not exist. The deployment authorization covered only the finalized creation, funding, code installation and initialization batch. [Deployment evidence](evidence/testnet-deployment.json)
+The dedicated contract is deployed at `contract.proofbound-dev-2026.testnet` with an initial NFT supply of zero. The two separately approved service setup transactions are also final. [Deployment evidence](evidence/testnet-deployment.json) · [Service setup evidence](evidence/testnet-service-setup.json)
 
-## Stage 1: Approve account and key setup
+## Stage 1: Service account setup verified
 
-All three proposed batches use testnet. The signer is `proofbound-dev-2026.testnet` with its existing FullAccess keychain public key `ed25519:FNjvjHjhvV252B3uQm844fjPHDRBFRz8tah8cLWGLi72`. Every batch begins with `CreateAccount`. Recheck the destinations, parent key and fees immediately before signing and stop if a destination already exists. Fund **0.60 testnet NEAR in total**, divided as follows.
+The signer was `proofbound-dev-2026.testnet` with its existing FullAccess keychain public key `ed25519:FNjvjHjhvV252B3uQm844fjPHDRBFRz8tah8cLWGLi72`. Both destinations were absent at preflight block **277677538**. Each finalized receipt contained `CreateAccount`, a **0.20 testnet NEAR** transfer, `AddKey` for the recovery key, and `AddKey` for the restricted service key.
 
-| Receiver | Ordered actions after `CreateAccount` | Scheduled gas | Est. testnet NEAR fee |
-|---|---|---:|---:|
-| `exec.proofbound-dev-2026.testnet` | Transfer 0.20 NEAR, add parent `FullAccess` recovery key, add executor `FunctionCall` key below | 8.555521242104 Tgas | 0.0008555521242104 |
-| `verify.proofbound-dev-2026.testnet` | Transfer 0.20 NEAR, add parent `FullAccess` recovery key, add verifier `FunctionCall` key below | 8.554876324506 Tgas | 0.0008554876324506 |
-| `customer.proofbound-dev-2026.testnet` | Transfer 0.20 NEAR, add the existing parent key as the customer's sole `FullAccess` key for a CLI-controlled test account | 8.349895375 Tgas | 0.0008349895375 |
+| Receiver | Finalized transaction | Actual testnet NEAR fee | Total balance | Storage reserve |
+|---|---|---:|---:|---:|
+| `exec.proofbound-dev-2026.testnet` | [HJeTtHt5bGubBzQGnYRS1XT8U2giXEEhibYRnmusDphk](https://testnet.nearblocks.io/txns/HJeTtHt5bGubBzQGnYRS1XT8U2giXEEhibYRnmusDphk) | 0.0071355521242104 | 0.20 | 0.00355 |
+| `verify.proofbound-dev-2026.testnet` | [UHD3DWioXsSVrycs2JznPgSk9qCQ37LqjoD3BMFujaW](https://testnet.nearblocks.io/txns/UHD3DWioXsSVrycs2JznPgSk9qCQ37LqjoD3BMFujaW) | 0.0071354876324506 | 0.20 | 0.00339 |
 
 | Online service | Ed25519 public key | Exact method allowlist |
 |---|---|---|
@@ -21,11 +20,22 @@ Each service key is scoped to `contract.proofbound-dev-2026.testnet`, has a **0.
 
 The two independently generated online credentials are stored in a Windows DPAPI `CurrentUser` bundle in the operator's local profile outside Git. The bundle decrypted back to the original in-memory payload and the file ACL grants access to the current Windows user. Local storage ties access to that user and machine. When live worker writes are separately approved, load the two credentials only into that worker process. [Windows DPAPI](https://learn.microsoft.com/en-us/windows/win32/api/dpapi/nf-dpapi-cryptprotectdata)
 
-The exact customer batch above uses the existing keychain only. Reuse increases the accounts exposed by an admin-key compromise and gives no separate browser wallet credential. For the browser demo, use an independently controlled NEP-413-compatible testnet wallet public key as the customer's sole `FullAccess` key. Supply only its public key, then review the updated customer batch before signing. Keep the shared admin credential in the keychain.
+Total fees were **0.014271039756661 testnet NEAR**, within the **0.02** ceiling. The earlier static estimate omitted the protocol account creation charge. Independent reads at finalized block **277677678** confirmed both exact key lists, both balances, the deployed code hash, configured roles, and the absence of the customer account. The parent balance is **5.323779425001651** testnet NEAR, including **0.00182** reserved for storage. The contract balance is **4.25** testnet NEAR. [NEAR gas pricing and account creation charge](https://github.com/near/nearcore/blob/master/docs/architecture/how/gas.md#gas-price)
 
-At finalized block **277653134**, all three destinations returned `UNKNOWN_ACCOUNT`. The parent had **5.738050464758312** testnet NEAR including **0.00182** in storage reserve. All three unsigned Borsh transactions were independently decoded and verified. At **100,000,000 yoctoNEAR per gas unit**, total estimated fees are **0.002546029294161 testnet NEAR**. The requested fee ceiling is **0.02 testnet NEAR** for all setup fees, for a maximum parent debit of **0.62 testnet NEAR** with all three batches. Refresh nonce, recent block hash and fee estimate if approved. [NEAR runtime fees](https://github.com/near/nearcore/blob/master/docs/RuntimeSpec/Fees/Fees.md)
+## Browser wallet for the customer
 
-The downloaded testnet WASM matched the reviewed release hash and exports all three service methods. The reviewed methods are nonpayable and require their configured predecessor IDs. The worker sends zero-deposit calls and checks the live access key and role before signing. All 29 contract tests passed, including role separation and settlement safeguards. Live key installation and live method calls still require separate approval.
+Use a separately controlled named `.testnet` wallet. Meteor's NEAR Connect integration advertises both testnet and message signing. In the wallet, select NEAR Testnet and use an independent named account. Provide only its public account ID for a finalized balance and key check. To provision `customer.proofbound-dev-2026.testnet` instead, provide only the wallet's independent Ed25519 public key and review the exact creation batch before signing. The reviewed owner wallet and customer must be distinct. [Meteor Wallet](https://docs.meteorwallet.app/) · [NEAR Connect manifest](https://raw.githubusercontent.com/hot-dao/near-selector/refs/heads/main/repository/manifest.json)
+
+## Approve restricted-key enforcement calls
+
+The contract exports the reviewed nonpayable methods and checks the executor or verifier predecessor before touching jobs. Both proposals use only the installed executor FunctionCall key on `exec.proofbound-dev-2026.testnet`, receiver `contract.proofbound-dev-2026.testnet`, **20 Tgas** and **0 NEAR** attached per call. Recheck that the probe job ID is absent immediately before signing.
+
+| Order | Call | Expected evidence |
+|---|---|---|
+| 1 | `get_config({})` | NEAR rejects the method outside the key's allowlist before receipt execution. Record the RPC error and check that nonce, allowance and balance did not move. |
+| 2 | `start_job({"job_id":"proofbound-permission-probe-20261114"})` | NEAR admits the allowed method and the contract returns `Unknown job` in a finalized failed receipt. This checks authorization and leaves job state untouched. The first successful call can be the real queued job's `start_job`. |
+
+At block **277677878**, the allowed call required **0.020919271699719** testnet NEAR up front and could burn up to **0.0021199014339642** at the observed gas price. The forbidden call should incur no fee. Proposed combined fee ceiling is **0.005 testnet NEAR**. Neither call has run. [NEAR access-key checks](https://github.com/near/nearcore/blob/master/runtime/runtime/src/verifier.rs)
 
 ## Stage 2: Approve the test run
 
@@ -41,7 +51,7 @@ Use the branded local interface in testnet mode, connected to the deployed contr
 | 8–10 | Executor, executor, verifier | `start_job`, `submit_result`, `verify_job` for the marketplace job in order | 0 each |
 | 11 | Owner wallet | `nft_transfer` to the reviewed buyer after both jobs settle and all reservations clear | 1 yoctoNEAR |
 
-The worker attaches 100 Tgas per call. At the setup review's gas price, every 100 Tgas represents 0.01 testnet NEAR in prepaid execution gas, plus receipt and action fees. Obtain a separate lifecycle fee ceiling from fresh values before approval. The customer quote contains 0.01 service, 0.008 maximum compute and 0.02 storage. Review each transaction's dynamic token ID, hashes, deadline and exact quote before signing. Use the real result and evidence commitments for each `submit_result`, then measured Fuel and a truthful acceptance outcome for each `verify_job`. If research or verification fails, the existing refund path uses the same verifier method with a failed outcome. Stop on an ambiguous onchain result and reconcile before signing anything further.
+The worker attaches **30 Tgas** for service calls and stages **100 Tgas** for wallet calls. Testnet's minimum gas purchase price of 1 billion yoctoNEAR per gas would charge more than 0.10 NEAR up front at 100 Tgas, exceeding the service allowance. The 30 Tgas limit fits the installed 0.05 NEAR allowance at the observed parameters. Transaction execution within this limit remains to be verified live. Check current gas purchase costs, allowances and wallet balances before approval. The customer quote contains 0.01 service, 0.008 maximum compute and 0.02 storage. Review each transaction's dynamic token ID, hashes, deadline and exact quote before signing. Use real result and evidence commitments and report the measured Fuel and actual verification outcome. If research or verification fails, the existing refund path uses the same verifier method with a failed outcome. Stop on an ambiguous onchain result and reconcile before signing anything further.
 
 Expected successful receipt: 0.009 owner gross, 0.001 platform service share, 0.0018 funded refill (1,800 Fuel), 0.0072 claimable owner share under normal headroom, and a refund of unused compute. Actual compute and refund depend on measured Fuel. The verifier must use actual results. A successful contract settlement only supports a live inference claim when the provider receipt shows an actual NEAR AI call.
 

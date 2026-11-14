@@ -11,6 +11,8 @@ interface ContractConfig {executor_id:string;verifier_id:string;treasury_id:stri
 interface PendingOperation {id:string;accountId:string;intent:TransactionIntent;kind:string;agentId?:string;config?:AgentConfig;job?:StoredJob;createdAt:number;confirmedHash?:string;result?:unknown;requestFingerprint?:string;}
 const nsDate=(value:string)=>new Date(Number(BigInt(value)/1000000n)).toISOString();
 const configurationKey = (tokenId: string, epoch: number, hash: string) => `${tokenId}:${epoch}:${hash}`;
+// A restricted key must cover the upfront gas purchase within its 0.05 NEAR allowance.
+const serviceCallGas = 30_000_000_000_000n;
 export class Chain {
   private signing=Promise.resolve();
   private confirming=Promise.resolve();
@@ -158,11 +160,11 @@ export class Chain {
     const settings=await this.contractConfig();invariant(accountId===settings[`${role}_id`],"SIGNER_MISMATCH","Service account differs from the contract-authorized role.",503);
     const {Account,JsonRpcProvider,KeyPair}=await import("near-api-js"),pair=KeyPair.fromString(key as `ed25519:${string}`),access=await this.accessKey(accountId,pair.getPublicKey().toString()) as {permission:any};
     const permission=access.permission?.FunctionCall;
-    invariant(permission&&permission.receiver_id===this.config.contractId&&Array.isArray(permission.method_names)&&permission.method_names.length>0&&permission.method_names.every((m:string)=>allowed.includes(m))&&permission.method_names.includes(methodName)&&permission.allowance!==null,"UNRESTRICTED_SIGNER","Runtime refuses FullAccess or unrestricted service keys. Use a capped FunctionCall key scoped to this contract and role's methods.",503);
+    invariant(permission&&permission.receiver_id===this.config.contractId&&Array.isArray(permission.method_names)&&permission.method_names.length>0&&permission.method_names.every((m:string)=>allowed.includes(m))&&permission.method_names.includes(methodName)&&typeof permission.allowance==="string"&&/^\d+$/.test(permission.allowance)&&BigInt(permission.allowance)<=50_000_000_000_000_000_000_000n,"UNRESTRICTED_SIGNER","Runtime requires a FunctionCall key scoped to this contract and role's methods, capped at 0.05 NEAR.",503);
     const status=await this.rpc<{chain_id:string}>("status",[]);invariant(status.chain_id==="testnet","WRONG_NETWORK","Runtime signing is restricted to NEAR testnet.",503);
     // Serialize nonce allocation across worker jobs; model context never sees the signer.
     let release!:()=>void;const previous=this.signing;this.signing=new Promise<void>(r=>{release=r;});await previous;
-    try{const account=new Account(accountId,new JsonRpcProvider({url:this.config.rpcUrl}),key as `ed25519:${string}`),result=await account.callFunction({contractId:this.config.contractId!,methodName,args,gas:100000000000000n,deposit:0n});const tx=(result as any).transaction?.hash;invariant(tx,"TX_RECEIPT","Service transaction returned no verifiable transaction hash.",502);const final=await this.rpc<any>("tx",{tx_hash:tx,sender_account_id:accountId,wait_until:"FINAL"});invariant(final.status&&"SuccessValue"in final.status,"TX_FAILED","Service transaction did not complete successfully.",502);return tx;}
+    try{const account=new Account(accountId,new JsonRpcProvider({url:this.config.rpcUrl}),key as `ed25519:${string}`),result=await account.callFunction({contractId:this.config.contractId!,methodName,args,gas:serviceCallGas,deposit:0n});const tx=(result as any).transaction?.hash;invariant(tx,"TX_RECEIPT","Service transaction returned no verifiable transaction hash.",502);const final=await this.rpc<any>("tx",{tx_hash:tx,sender_account_id:accountId,wait_until:"FINAL"});invariant(final.status&&"SuccessValue"in final.status,"TX_FAILED","Service transaction did not complete successfully.",502);return tx;}
     catch(error){if(error instanceof AppError)throw error;throw new AppError("SIGNER_FAILED","Service signing failed. Inspect the testnet receipt; credentials are never included in this response.",502);}finally{release();}
   }
 }

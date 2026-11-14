@@ -7,7 +7,9 @@
 - [ ] Record screenshots/video of final demo flow for submission.
 - [x] Deploy the approved testnet contract and verify the deployment receipt, code, balances and roles.
 - [x] Prepare two restricted service credentials locally and verify the unsigned account setup.
-- [ ] Approve and provision the restricted service roles and a separately controlled browser demo wallet.
+- [x] Provision the approved restricted service roles and verify final receipts, balances and permissions.
+- [ ] Approve and run the two restricted-key probes.
+- [ ] Verify independently controlled browser wallets for the owner and customer demo accounts.
 - [ ] Capture finalized mint, activation, private research, paid hire, settlement with Earn-to-Refill, and transfer evidence.
 - [ ] Approve implementation push to the public repository.
 - [ ] Human publishes X demo with an authentic video, event name and tags.
