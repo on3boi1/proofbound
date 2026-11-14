@@ -6,7 +6,9 @@
 - [x] Exercise local mint, activation and personal work in Chrome.
 - [ ] Record screenshots/video of final demo flow for submission.
 - [x] Deploy the approved testnet contract and verify the deployment receipt, code, balances and roles.
-- [ ] Approve and provision restricted service roles, then capture real mint-to-settlement receipts.
+- [x] Prepare two restricted service credentials locally and verify the unsigned account setup.
+- [ ] Approve and provision the restricted service roles and a separately controlled browser demo wallet.
+- [ ] Capture finalized mint, activation, private research, paid hire, settlement with Earn-to-Refill, and transfer evidence.
 - [ ] Approve implementation push to the public repository.
 - [ ] Human publishes X demo with an authentic video, event name and tags.
 - [ ] Confirm team details, mainnet payout account and contact consent. Review live rules and exact payload.
