@@ -31,3 +31,9 @@ Selected direction: Envoy's editorial hierarchy and readable receipts, informed 
 - Focus indicators, semantic headings, labeled inputs, error messages, disabled pending actions, reduced-motion handling and visible fixture/testnet labels are required.
 
 Third-party assets: Lucide icons (ISC), the two bundled font families (their package font licenses), and NEAR connector UI supplied by its dependency. No paid Framer assets are included. Actual implementation screenshots and responsive findings are recorded in DEMO_EVIDENCE.md after browser QA.
+
+## Browser identity
+
+The original Proofbound symbol is a compact P with an offset verification tick. The mark uses the existing deep forest and lime palette with a green keyline to separate the tile from both light and dark surfaces. Broad stems, an open counter and a separate tick are designed for 16 and 32 pixels. The same SVG supplies the application wordmark, security diagram and wallet selector footer. Regenerate the SVG, PNG and ICO variants with `node scripts/brand-assets.mjs`.
+
+The Chrome design pass retained Envoy's editorial hierarchy and Orqen's evidence-first structure. It shortened repetitive sidebar copy, gave demo steps specific destinations and actions, and removed the wallet prompt while the worker mode is unknown. The app serves an ICO, SVG, Apple touch icon and manifest through App Router conventions.

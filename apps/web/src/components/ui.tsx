@@ -5,9 +5,10 @@ import type { Agent, Job, JobStatus } from "@proofbound/shared";
 import { formatNear } from "@proofbound/shared";
 import { useApp } from "./provider";
 import { dateTime, number, shortId } from "@/lib/api";
+import { BRAND } from "@/lib/brand";
 import type { ReactNode } from "react";
 
-export function Mark({ small = false }: { small?: boolean }) { return <span className={`brand-mark ${small ? "small" : ""}`} aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M7 7h11a7 7 0 0 1 0 14h-5V11h5a3 3 0 0 1 0 6h-1" stroke="currentColor" strokeWidth="3" /><path d="M7 7v18M20 23l3 3 5-6" stroke="currentColor" strokeWidth="3" /></svg></span>; }
+export function Mark() { return <span className="brand-mark" aria-hidden="true"><img src={BRAND.mark} alt="" width={34} height={34} /></span>; }
 export function Brand() { return <Link className="brand" href="/" aria-label="PROOFBOUND home"><Mark /> <span>PROOFBOUND</span></Link>; }
 export function AgentGlyph({ large = false, seed = "Atlas" }: { large?: boolean; seed?: string }) { const offset = (seed.charCodeAt(0) || 0) % 3; return <div className={`agent-glyph ${large ? "large" : ""} glyph-${offset}`} aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><path d="m32 10 20 12v23L32 56 12 45V22L32 10Z" stroke="currentColor" strokeWidth="1.3"/><path d="m12 22 20 12 20-12M32 34v22M22 16v24l20 11M42 16v24L22 51M12 34l20-12 20 12" stroke="currentColor" strokeWidth="1.3"/><circle cx="32" cy="34" r="4" fill="currentColor"/></svg></div>; }
 export function Badge({ children, tone = "neutral", dot = false }: { children: ReactNode; tone?: "neutral" | "green" | "amber" | "red" | "blue"; dot?: boolean }) { return <span className={`badge badge-${tone}`}>{dot && <i />}{children}</span>; }

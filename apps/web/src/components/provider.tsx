@@ -5,6 +5,7 @@ import type { Bootstrap, TransactionIntent } from "@proofbound/shared";
 import type { NearConnector } from "@hot-labs/near-connect";
 import { CheckCircle2, CircleAlert, LoaderCircle, X } from "lucide-react";
 import { api, errorMessage } from "@/lib/api";
+import { BRAND } from "@/lib/brand";
 
 type Notice = { message: string; kind: "success" | "error" | "info" };
 interface ContextValue {
@@ -42,7 +43,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const getConnector = useCallback(async () => {
     if (!connector.current) {
       const { NearConnector } = await import("@hot-labs/near-connect");
-      connector.current = new NearConnector({ network: "testnet", features: { signMessage: true }, autoConnect: false });
+      connector.current = new NearConnector({
+        network: "testnet",
+        features: { signMessage: true },
+        autoConnect: false,
+        footerBranding: {
+          icon: new URL(BRAND.mark, window.location.origin).href,
+          heading: BRAND.name,
+          link: new URL("/demo", window.location.origin).href,
+          linkText: "About PROOFBOUND",
+        },
+      });
     }
     return connector.current;
   }, []);

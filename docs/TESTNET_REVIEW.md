@@ -1,19 +1,20 @@
 # Testnet deployment review
 
-Target is the existing development account `proofbound-dev-2026.testnet`. A read-only query at final block 277646206 confirmed 10 testnet NEAR and no contract code. Deployment and initialization form one transaction on the `testnet` network. The signer is that same account's existing NEAR CLI keychain credential.
+Target and signer are both `proofbound-dev-2026.testnet`. A read-only query at final block 277649659 confirmed 10 testnet NEAR, 182 bytes of existing storage, and no contract code. Deployment and initialization form one transaction on the `testnet` network using that account's existing NEAR CLI keychain credential.
 
 | Item | Proposed value |
 |---|---|
 | Build artifact | `contracts/proofbound/target/wasm32-unknown-unknown/release/proofbound.wasm` |
 | Size | 395,854 bytes |
 | SHA-256 | `d3997e9541156038fad7d9418444badd295a48242b2df21b9d485ca15e82c3c2` |
-| Initialization | `new` with `scripts/testnet-init.json` |
+| Action 1 | `DeployContract` with the reviewed WASM bytes |
+| Action 2 | `FunctionCall` to `new` with `scripts/testnet-init.json` |
 | Attached deposit | 0 NEAR |
-| Initialization gas cap | 100 Tgas, plus deploy transaction costs |
-| Storage | About 4 testnet NEAR remains reserved for deployed code, subject to network storage accounting |
+| Gas estimate | At the observed 0.0001 testnet NEAR/Tgas, estimated fixed transaction fees are 0.00298 testnet NEAR. Including the full 100 Tgas call allowance brings the estimate to 0.01299. Final fees depend on gas price and actual execution. |
+| Storage | 3.95854 testnet NEAR for 395,854 code bytes at 0.00001 NEAR/byte, plus account and initialization state. Budget about 4 testnet NEAR held for storage. |
 | Roles | Executor `exec.proofbound-dev-2026.testnet`, verifier `verify.proofbound-dev-2026.testnet`, treasury and contract operator `proofbound-dev-2026.testnet` |
 
-The transaction makes code and initialized state observable on NEAR testnet. The operator retains the account's full-access key and upgrade authority. The two service role accounts and restricted keys require a separate setup step before paid jobs execute. Deployment approval covers only the transaction described above. Customer jobs, role setup, transfers, hosting and GitHub require their own authorized scope.
+The transaction publishes code and role account IDs on testnet. Gas is spent even if execution fails. Confirm the exact final contract state before retrying after a failed or ambiguous receipt. The account's full-access key retains upgrade authority. The executor and verifier roles require separate account and key setup before paid jobs can run. This approval covers only the two actions above. [NEAR RPC protocol configuration](https://docs.near.org/api/rpc/protocol)
 
 Before signing, recheck the artifact hash and confirm the target still has no contract code. After deployment, verify the finalized transaction and call `get_config`, `nft_metadata` and `nft_total_supply`. Save the actual receipt before reporting success.
 
