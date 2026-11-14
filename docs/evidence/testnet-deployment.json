@@ -1,0 +1,102 @@
+{
+  "network": "testnet",
+  "txHash": "CG8mECzSAW8ST2PmKyZExHrCjBmtmK9X6NpAWr9rW1Dz",
+  "explorer": "https://testnet.nearblocks.io/txns/CG8mECzSAW8ST2PmKyZExHrCjBmtmK9X6NpAWr9rW1Dz",
+  "status": "FINAL",
+  "outcome": {
+    "SuccessValue": ""
+  },
+  "signer": "proofbound-dev-2026.testnet",
+  "contract": "contract.proofbound-dev-2026.testnet",
+  "publicKey": "ed25519:FNjvjHjhvV252B3uQm844fjPHDRBFRz8tah8cLWGLi72",
+  "actions": [
+    "CreateAccount",
+    "Transfer",
+    "AddKey",
+    "DeployContract",
+    "FunctionCall"
+  ],
+  "transferYocto": "4250000000000000000000000",
+  "tokensBurntYocto": "11949535241688000000000",
+  "transactionBlockHash": "7H8zuHwYyfigUznG7k25zfnm8xrBpS98x64cpPEecdKJ",
+  "finalizedStateBlock": {
+    "height": 277651748,
+    "hash": "52VHYPTAxNEyMSkFqdbosC9QVEMe3YSEnntMyABGUtFQ"
+  },
+  "codeHash": "FEzmypQteUoXXFZ2UAme6nZ8HhtTxAsKjCCA9xGRFWuP",
+  "wasmHash": "d3997e9541156038fad7d9418444badd295a48242b2df21b9d485ca15e82c3c2",
+  "wasmSize": 395854,
+  "initHash": "455eb1cdfcc2b81caeeecca4d7ccbfa0980c7acd79b90bf1923a449b82770f2e",
+  "verifiedState": {
+    "owner_id": "proofbound-dev-2026.testnet",
+    "executor_id": "exec.proofbound-dev-2026.testnet",
+    "verifier_id": "verify.proofbound-dev-2026.testnet",
+    "treasury_id": "proofbound-dev-2026.testnet",
+    "pricing": {
+      "fuel_unit_price": "1000000000000000000",
+      "initial_fuel": 100000,
+      "mint_storage_fee": "50000000000000000000000",
+      "mint_platform_fee": "10000000000000000000000",
+      "job_storage_fee": "20000000000000000000000",
+      "default_service_fee": "10000000000000000000000"
+    },
+    "mint_total": "160000000000000000000000",
+    "platform_fee_bps": 1000,
+    "network_policy": "Testnet prototype; Fuel is subsidized operating credit, not a token"
+  },
+  "nftMetadata": {
+    "name": "PROOFBOUND Agents",
+    "symbol": "PROOFBOUND",
+    "spec": "nft-1.0.0"
+  },
+  "nftTotalSupply": "0",
+  "childFullAccessKey": "ed25519:FNjvjHjhvV252B3uQm844fjPHDRBFRz8tah8cLWGLi72",
+  "balances": {
+    "parent": {
+      "amountYocto": "5738050464758312000000000",
+      "storageBytes": 182,
+      "storageReserveYocto": "1820000000000000000000",
+      "amountAboveReserveYocto": "5736230464758312000000000",
+      "lockedYocto": "0"
+    },
+    "contract": {
+      "amountYocto": "4250000000000000000000000",
+      "storageBytes": 396490,
+      "storageReserveYocto": "3964900000000000000000000",
+      "amountAboveReserveYocto": "285100000000000000000000",
+      "lockedYocto": "0"
+    }
+  },
+  "roleAccounts": {
+    "executor": {
+      "accountId": "exec.proofbound-dev-2026.testnet",
+      "exists": false,
+      "ready": false,
+      "reason": "UNKNOWN_ACCOUNT"
+    },
+    "verifier": {
+      "accountId": "verify.proofbound-dev-2026.testnet",
+      "exists": false,
+      "ready": false,
+      "reason": "UNKNOWN_ACCOUNT"
+    }
+  },
+  "receipts": [
+    {
+      "id": "JABZCfaBY5tk6fhLUpxw3kRCbw7E5DLw2NAKDgJfLFB1",
+      "blockHash": "7UWo2boeQzfvhQDsjr3Zub7mUokCZVZdxmJEEAd3MaUw",
+      "status": {
+        "SuccessValue": ""
+      },
+      "tokensBurntYocto": "9939912082589500000000"
+    },
+    {
+      "id": "A6J64xWPv7i8f8Ry9hTnhfadfubTYW6uGcKEo9azYMyk",
+      "blockHash": "EvHZDsooBM5azKg5GuThqFcAhtSeVomAV1JkmLat3QYe",
+      "status": {
+        "SuccessValue": ""
+      },
+      "tokensBurntYocto": "0"
+    }
+  ]
+}

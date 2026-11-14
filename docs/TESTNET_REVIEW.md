@@ -1,5 +1,7 @@
 # Testnet deployment review
 
+**Completed and verified.** This document records the approved deployment. The finalized batch is [CG8mECzSAW8ST2PmKyZExHrCjBmtmK9X6NpAWr9rW1Dz](https://testnet.nearblocks.io/txns/CG8mECzSAW8ST2PmKyZExHrCjBmtmK9X6NpAWr9rW1Dz). Actual fee was 0.011949535241688 testnet NEAR. See [RPC evidence](evidence/testnet-deployment.json) and [next-stage review](TESTNET_LIFECYCLE_REVIEW.md).
+
 Deploy to the dedicated `contract.proofbound-dev-2026.testnet` subaccount. The parent `proofbound-dev-2026.testnet` creates, funds, and initializes it in one testnet transaction. This replaces the earlier proposal to deploy directly to the parent.
 
 At finalized testnet block **277650642** (`CahQiWt3eKoHizQzqxfeS6gRDYNoqHWt8zAMrZ5rdqMz`, protocol 88), the parent held 10 testnet NEAR, used 182 bytes of storage, and had no contract code. The prospective contract, executor, and verifier account queries each returned `UNKNOWN_ACCOUNT`. The parent's single onchain key is `FullAccess`. A public-key-only NEAR CLI keychain lookup returned that same key, with no signature or private key output.
@@ -43,7 +45,7 @@ Reuse of the existing testnet credential avoids a second full-access secret. Con
 
 ## Reviewed command
 
-The final `send` signs and broadcasts. Use it only after explicit approval of the five actions. Immediately before signing, recheck the pinned WASM and initialization arguments, sufficient parent balance, current FullAccess permission, reasonable gas pricing, and an `UNKNOWN_ACCOUNT` response for the child. Stop on any mismatch. Sign with a fresh nonce and block hash.
+Historical command used for the approved batch. The target is already created.
 
 ```powershell
 near transaction construct-transaction proofbound-dev-2026.testnet receiver-id contract.proofbound-dev-2026.testnet add-action create-account add-action transfer '4.25 NEAR' add-action add-key grant-full-access use-manually-provided-public-key ed25519:FNjvjHjhvV252B3uQm844fjPHDRBFRz8tah8cLWGLi72 add-action deploy-contract use-file contracts/proofbound/target/wasm32-unknown-unknown/release/proofbound.wasm without-init-call add-action function-call new file-args scripts/testnet-init.json prepaid-gas '100 Tgas' attached-deposit '0 NEAR' skip network-config testnet sign-with-keychain --signer-public-key ed25519:FNjvjHjhvV252B3uQm844fjPHDRBFRz8tah8cLWGLi72 send --wait-until final

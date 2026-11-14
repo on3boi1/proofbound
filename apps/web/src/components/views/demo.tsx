@@ -9,6 +9,7 @@ export function DemoView() {
   const active = data?.agents.find(agent => agent.ownerId === data.session?.accountId);
   const fixture = data?.runtime.providerMode === "fixture";
   const local = data?.runtime.mode === "local";
+  const waitingForWorker = data?.runtime.mode === "testnet" && !data.runtime.workerRunning;
   const steps = [
     { title: "Mint Atlas", action: "Mint an Agent", detail: "Choose the Research specialization. Review storage, initial Fuel, and the platform allocation before minting.", href: "/mint", icon: Fingerprint },
     { title: "Activate and run a research job", action: active ? "Open workspace" : "View My Agents", detail: "Open the workspace, enable the approved tools, and activate the agent. Ask it to explain NEAR NFT ownership and the job’s execution cap.", href: active ? `/workspace/${active.id}` : "/dashboard", icon: Workflow },
@@ -18,6 +19,7 @@ export function DemoView() {
   return <>
     <PageHeading eyebrow="GUIDED DEMO" title="From mint to proof" description="Follow the same workflow the application uses for research, receipts, and ownership." />
     <Notice>{local ? "Local demo uses simulated balances and identities." : "NEAR testnet requires a funded wallet and approved execution worker."} {fixture ? "Reports use deterministic fixtures." : "Research calls NEAR AI with a bounded execution budget."}</Notice>
+    {waitingForWorker && <Notice tone="warning">Testnet contract reads are available. Job submission needs an authorized executor and verifier.</Notice>}
     <div className="demo-steps">{steps.map((step, index) => <section className="panel demo-step" key={step.href + step.title}>
       <div className="demo-step-mark"><step.icon size={23} /><span className="mono">{String(index + 1).padStart(2, "0")}</span></div>
       <div><h2>{step.title}</h2><p>{step.detail}</p></div>

@@ -10,4 +10,4 @@ Run `npm ci`, then `npm test` and `npm run dev`. Open `http://127.0.0.1:3000/dem
 6. Return to the owner. Check service split, compute refund, funded refill and Passport. Run the payout redirection probe on the Ownership & Security page.
 7. Transfer to `buyer.local`. Confirm the former owner cannot manage the agent. Switch to the buyer, check the retained Passport and Fuel, then reactivate.
 
-The testnet workflow uses wallet confirmation and the same pages. Live contract deployment and backend role setup are reviewed separately. [Testnet review](TESTNET_REVIEW.md)
+The contract is deployed and initialized at `contract.proofbound-dev-2026.testnet`. The [deployment receipt](evidence/testnet-deployment.json) covers creation, funding and initialization. A testnet worker can read the contract. Minting, jobs, settlement and transfer require their own testnet approvals and receipts. Follow the [next-stage review](TESTNET_LIFECYCLE_REVIEW.md) for the proposed run. Use the local walkthrough above for the currently verified full lifecycle.

@@ -12,7 +12,9 @@ November 14, 2026.
 | Live Research Agent | Passed with seven deterministic verification checks using the configured NEAR AI key. The request used 1,631 tokens. |
 | Browser | Local mint, activation, quote, job completion and evidence views checked in Chrome. Desktop, phone and tablet review covered the report. |
 | Browser branding | Production build and the existing application tests passed. Chrome showed the updated app mark and resolved the browser title and icon links. All icon and manifest routes responded with HTTP 200 and expected media types. ICO has 16, 32 and 48px frames. PNG artwork was inspected at 16 and 32px on light and dark backgrounds. Native Chrome tab-strip inspection was blocked by the browser URL safety check. |
-| Testnet write path | Deployment approval pending. Live wallet signing and testnet settlement are unverified. |
+| Testnet deployment | Final success for the approved five-action batch `CG8mECzSAW8ST2PmKyZExHrCjBmtmK9X6NpAWr9rW1Dz`. Independently verified roles, initialization, code hash, fresh NFT supply, admin key and balances. Actual fee was 0.011949535241688 testnet NEAR against the 0.02 budget. [RPC evidence](evidence/testnet-deployment.json) |
+| Testnet application reads | Local worker bootstrap returned the deployed contract address, zero agents, zero simulated identities, the 0.16 NEAR mint price, and the 0.02 NEAR job storage fee. Execution remained disabled. Production frontend build and both existing app tests passed. |
+| Testnet mint and work | Pending role provisioning and specific transaction approval. The deployed contract's initial NFT supply is zero. |
 | Final deployment safety review | 29 contract tests passed on rerun. Release hash remained `d3997e9541156038fad7d9418444badd295a48242b2df21b9d485ca15e82c3c2`. Verified the keychain's public key against finalized testnet permissions and decoded an unsigned five-action batch. The new contract account did not exist at the reviewed block. |
 
 Commands are listed in [README.md](../README.md). On the managed Windows host, the HTTP test required loopback permission. The default sandbox denied the connection before any integration assertions ran.
