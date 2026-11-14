@@ -1,0 +1,129 @@
+{
+  "network": "testnet",
+  "executor": "exec.proofbound-dev-2026.testnet",
+  "executorPublicKey": "ed25519:GNRAPM1j3a3tu4wvzNTzJWPWDYANVGRwYJREhEwKDa8X",
+  "contract": "contract.proofbound-dev-2026.testnet",
+  "jobId": "proofbound-permission-probe-20261114",
+  "preflightBlock": {
+    "height": 277679666,
+    "hash": "CeXWaxAryEaTHuEdzPVrVda557x4NDhrxKE3CfEQiKGU"
+  },
+  "feeCeilingYocto": "5000000000000000000000",
+  "gasPriceYocto": "100000000",
+  "totalMaxFeeEstimateYocto": "4683126400491210074669",
+  "customer": {
+    "accountId": "proofbound.testnet",
+    "amountYocto": "500000000000000000000000",
+    "lockedYocto": "0",
+    "storageBytes": 182,
+    "fullAccessKeyCount": 1,
+    "distinctFromDeveloperKey": true
+  },
+  "probes": [
+    {
+      "method": "get_config",
+      "args": {},
+      "gas": "20000000000000",
+      "depositYocto": "0",
+      "txHash": "7T7cVK9imLMzJBqRvWYoF9UPNUMhZLbv7NQ9jo2jbjZs",
+      "status": "rejected-before-inclusion",
+      "rpcError": {
+        "name": "HANDLER_ERROR",
+        "cause": {
+          "info": {},
+          "name": "INVALID_TRANSACTION"
+        },
+        "code": -32000,
+        "message": "Server error",
+        "data": {
+          "TxExecutionError": {
+            "InvalidTxError": {
+              "InvalidAccessKeyError": {
+                "MethodNameMismatch": {
+                  "method_name": "get_config"
+                }
+              }
+            }
+          }
+        }
+      },
+      "finalizedReceipt": null,
+      "feeYocto": "0",
+      "verifiedBlockHeight": 277679703
+    },
+    {
+      "method": "start_job",
+      "args": {
+        "job_id": "proofbound-permission-probe-20261114"
+      },
+      "gas": "20000000000000",
+      "depositYocto": "0",
+      "txHash": "23Gr4L5v8s87LXLdvXpgwg2QYjwWRPHZ26gUnWiqcm6u",
+      "status": "final-contract-failure",
+      "outcome": {
+        "Failure": {
+          "ActionError": {
+            "index": 0,
+            "kind": {
+              "FunctionCallError": {
+                "ExecutionError": "WebAssembly trap: An `unreachable` opcode was executed."
+              }
+            }
+          }
+        }
+      },
+      "explorer": "https://testnet.nearblocks.io/txns/23Gr4L5v8s87LXLdvXpgwg2QYjwWRPHZ26gUnWiqcm6u",
+      "feeYocto": "183431271971600000000",
+      "transactionBlockHash": "BqARCJpqKW415XbAhX3Kini5ipqxRJRoC2LGThkjNXSv",
+      "receipts": [
+        {
+          "id": "23Gr4L5v8s87LXLdvXpgwg2QYjwWRPHZ26gUnWiqcm6u",
+          "executor": "exec.proofbound-dev-2026.testnet",
+          "status": {
+            "SuccessReceiptId": "EYGnN33SrXk46AMJwUq5LRGM1ieFMZ4WrFrVQGYiknWQ"
+          },
+          "logs": [],
+          "gasBurnt": "310825155470",
+          "tokensBurntYocto": "31082515547000000000"
+        },
+        {
+          "id": "EYGnN33SrXk46AMJwUq5LRGM1ieFMZ4WrFrVQGYiknWQ",
+          "executor": "contract.proofbound-dev-2026.testnet",
+          "status": {
+            "Failure": {
+              "ActionError": {
+                "index": 0,
+                "kind": {
+                  "FunctionCallError": {
+                    "ExecutionError": "WebAssembly trap: An `unreachable` opcode was executed."
+                  }
+                }
+              }
+            }
+          },
+          "logs": [],
+          "gasBurnt": "1523487564246",
+          "tokensBurntYocto": "152348756424600000000"
+        },
+        {
+          "id": "8y9VNSDAY7DUAZhBmrYY5RzGWG8ejhrVyzbrywPrJbby",
+          "executor": "exec.proofbound-dev-2026.testnet",
+          "status": {
+            "SuccessValue": ""
+          },
+          "logs": [],
+          "gasBurnt": "223182562500",
+          "tokensBurntYocto": "0"
+        }
+      ]
+    }
+  ],
+  "totalFeeYocto": "183431271971600000000",
+  "executorBalanceAfterYocto": "199816568728028400000000",
+  "executorAllowanceAfterYocto": "49816568728028400000000",
+  "finalizedStateBlock": {
+    "height": 277680701,
+    "hash": "EXgE7tPfmYAZj4Kex7ZZAAuFxP3mpoJj3fHuf1pvnT7C"
+  },
+  "probeJobAfter": null
+}

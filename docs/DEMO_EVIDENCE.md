@@ -9,4 +9,6 @@
 | Contract | 29 tests passed. The release artifact and hash are in [TESTNET_REVIEW.md](TESTNET_REVIEW.md). |
 | [Finalized testnet deployment](evidence/testnet-deployment.json) | The dedicated contract was created, funded with 4.25 testnet NEAR, deployed and initialized. Recorded fee is 0.011949535241688 testnet NEAR. Initial NFT supply is zero. No testnet lifecycle transactions have run. |
 | [Finalized testnet service setup](evidence/testnet-service-setup.json) | Both role accounts received 0.20 testnet NEAR and have the verified recovery and bounded service keys. Combined fees were 0.014271039756661 testnet NEAR. These receipts cover account setup. |
+| [Testnet permission probes](evidence/testnet-restricted-key-probes.json) | The executor key's forbidden `get_config` was rejected at admission. Its allowed `start_job` reached the contract and failed with a WASM trap on the nonexistent probe ID. No job was created. |
+| Meteor handoff | Chrome displayed Meteor in the testnet selector and reached the wallet approval screen. The customer must finish the message signature before claiming a connected session. |
 | Public demo post | Pending human recording and publication. |

@@ -8,7 +8,8 @@
 - [x] Deploy the approved testnet contract and verify the deployment receipt, code, balances and roles.
 - [x] Prepare two restricted service credentials locally and verify the unsigned account setup.
 - [x] Provision the approved restricted service roles and verify final receipts, balances and permissions.
-- [ ] Approve and run the two restricted-key probes.
+- [x] Run the approved restricted-key probes and record the pre-inclusion rejection and finalized failed call.
+- [x] Verify `proofbound.testnet` and reach Meteor Web from the local testnet selector.
 - [ ] Verify independently controlled browser wallets for the owner and customer demo accounts.
 - [ ] Capture finalized mint, activation, private research, paid hire, settlement with Earn-to-Refill, and transfer evidence.
 - [ ] Approve implementation push to the public repository.
