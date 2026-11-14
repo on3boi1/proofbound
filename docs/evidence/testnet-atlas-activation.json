@@ -1,0 +1,146 @@
+{
+  "phase": "final-success",
+  "txHash": "GB6GqYERprss2pKhYWfjAWXrwqWLcArTkK7XqKy2QvVR",
+  "signer": "proofbound-dev-2026.testnet",
+  "receiver": "contract.proofbound-dev-2026.testnet",
+  "preflightBlock": {
+    "height": 277682991,
+    "hash": "6S9aLPzpv6twguRaouDstnz9nxbjenn5kCH9FBcVVTPY"
+  },
+  "balanceBeforeYocto": "4663275640014038400000000",
+  "storageReserveYocto": "1820000000000000000000",
+  "gasUpfrontEstimateYocto": "100920581504847500000000",
+  "depositYocto": "1",
+  "attachedGas": "100000000000000",
+  "previousConfigVersion": 1,
+  "status": "FINAL",
+  "network": "testnet",
+  "signerPublicKey": "ed25519:FNjvjHjhvV252B3uQm844fjPHDRBFRz8tah8cLWGLi72",
+  "explorer": "https://testnet.nearblocks.io/txns/GB6GqYERprss2pKhYWfjAWXrwqWLcArTkK7XqKy2QvVR",
+  "codeHash": "FEzmypQteUoXXFZ2UAme6nZ8HhtTxAsKjCCA9xGRFWuP",
+  "tokenId": "1",
+  "feeYocto": "317816479396500000000",
+  "balanceAfterYocto": "4662957823534641899999999",
+  "actions": [
+    {
+      "FunctionCall": {
+        "args": "eyJ0b2tlbl9pZCI6IjEiLCJtb2RlIjoiaHlicmlkIiwiYWN0aXZlIjp0cnVlLCJtYXhfY29uY3VycmVudCI6MywibWF4X2Z1ZWxfcGVyX2pvYiI6ODAwMCwic2VydmljZV9mZWUiOiIxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCIsInJlaW52ZXN0X2JwcyI6MjAwMCwiY29uZmlnX2hhc2giOiIzNmNjOWM0ZTRmMDdkMTBjMmM1NDYzZTNkZWM3YzgyYWRjMjllNWRjNmVlODhjM2U1ZTY5ZmZmZWU2M2Y5NGZiIn0=",
+        "deposit": "1",
+        "gas": 100000000000000,
+        "method_name": "configure_agent"
+      }
+    }
+  ],
+  "finalizedBlock": {
+    "height": 277683034,
+    "hash": "EcnpG9FEYVTyx33J2rynSqihKTvSvVtvyJmcZ745pVKg"
+  },
+  "nft": {
+    "token_id": "1",
+    "owner_id": "proofbound-dev-2026.testnet",
+    "metadata": {
+      "title": "Atlas",
+      "description": "PROOFBOUND Research Agent. Ownership controls activation and bounded work. Testnet.",
+      "media": null,
+      "media_hash": null,
+      "copies": 1,
+      "issued_at": "1794673476950",
+      "expires_at": null,
+      "starts_at": null,
+      "updated_at": null,
+      "extra": "{\"specialization\":\"research\",\"template\":\"research-v1\"}",
+      "reference": null,
+      "reference_hash": null
+    },
+    "approved_account_ids": null
+  },
+  "agent": {
+    "token_id": "1",
+    "owner_id": "proofbound-dev-2026.testnet",
+    "name": "Atlas",
+    "specialization": "research",
+    "template_id": "research-v1",
+    "config_hash": "36cc9c4e4f07d10c2c5463e3dec7c82adc29e5dc6ee88c3e5e69fffee63f94fb",
+    "config_version": 2,
+    "ownership_epoch": 1,
+    "mode": "hybrid",
+    "active": true,
+    "transfer_pending": false,
+    "max_concurrent": 3,
+    "max_fuel_per_job": 8000,
+    "service_fee": "10000000000000000000000",
+    "reinvest_bps": 2000,
+    "available_fuel": 100000,
+    "reserved_fuel": 0,
+    "active_jobs": 0,
+    "lifetime": {
+      "completed_personal": 0,
+      "completed_paid": 0,
+      "failed_personal": 0,
+      "failed_paid": 0,
+      "reputation_events": 0
+    },
+    "configuration_performance": {
+      "completed_personal": 0,
+      "completed_paid": 0,
+      "failed_personal": 0,
+      "failed_paid": 0,
+      "reputation_events": 0
+    },
+    "epoch_performance": {
+      "completed_personal": 0,
+      "completed_paid": 0,
+      "failed_personal": 0,
+      "failed_paid": 0,
+      "reputation_events": 0
+    },
+    "lifetime_service_revenue": "0",
+    "created_at_ns": "1794673476950352318"
+  },
+  "privateQuote": {
+    "service_fee": "0",
+    "max_compute": "0",
+    "storage_fee": "20000000000000000000000",
+    "total_deposit": "20000000000000000000000",
+    "max_fuel": 8000,
+    "config_version": 2,
+    "refund_terms": "Evidence storage is retained. Failure/cancellation/expiry refunds all service and execution escrow; successful work refunds unused execution allowance. Refunds are claimable by the customer."
+  },
+  "marketplaceQuote": {
+    "service_fee": "10000000000000000000000",
+    "max_compute": "8000000000000000000000",
+    "storage_fee": "20000000000000000000000",
+    "total_deposit": "38000000000000000000000",
+    "max_fuel": 8000,
+    "config_version": 2,
+    "refund_terms": "Evidence storage is retained. Failure/cancellation/expiry refunds all service and execution escrow; successful work refunds unused execution allowance. Refunds are claimable by the customer."
+  },
+  "receipts": [
+    {
+      "id": "GB6GqYERprss2pKhYWfjAWXrwqWLcArTkK7XqKy2QvVR",
+      "blockHash": "BDnyStutHeWPpkWHn79Z1CMCqFYkviZ1kT7GLmNMehrD",
+      "executor": "proofbound-dev-2026.testnet",
+      "logs": [],
+      "gasBurnt": "319742010175",
+      "tokensBurntYocto": "31974201017500000000"
+    },
+    {
+      "id": "HA2yFgNgdaChKLcVkwz7JoLScTNY9GA3fBqyJgBxo8bY",
+      "blockHash": "7ikFQZZ6z8CNHg2EAvohd78FyRTBWVshLgZc27Tfc3V5",
+      "executor": "contract.proofbound-dev-2026.testnet",
+      "logs": [
+        "EVENT_JSON:{\"standard\":\"proofbound\",\"version\":\"1.0.0\",\"event\":\"agent_configured\",\"data\":[{\"agent\":{\"token_id\":\"1\",\"owner_id\":\"proofbound-dev-2026.testnet\",\"name\":\"Atlas\",\"specialization\":\"research\",\"template_id\":\"research-v1\",\"config_hash\":\"36cc9c4e4f07d10c2c5463e3dec7c82adc29e5dc6ee88c3e5e69fffee63f94fb\",\"config_version\":2,\"ownership_epoch\":1,\"mode\":\"hybrid\",\"active\":true,\"transfer_pending\":false,\"max_concurrent\":3,\"max_fuel_per_job\":8000,\"service_fee\":\"10000000000000000000000\",\"reinvest_bps\":2000,\"available_fuel\":100000,\"reserved_fuel\":0,\"active_jobs\":0,\"lifetime\":{\"completed_personal\":0,\"completed_paid\":0,\"failed_personal\":0,\"failed_paid\":0,\"reputation_events\":0},\"configuration_performance\":{\"completed_personal\":0,\"completed_paid\":0,\"failed_personal\":0,\"failed_paid\":0,\"reputation_events\":0},\"epoch_performance\":{\"completed_personal\":0,\"completed_paid\":0,\"failed_personal\":0,\"failed_paid\":0,\"reputation_events\":0},\"lifetime_service_revenue\":\"0\",\"created_at_ns\":\"1794673476950352318\"}}]}"
+      ],
+      "gasBurnt": "2858422783790",
+      "tokensBurntYocto": "285842278379000000000"
+    },
+    {
+      "id": "Ec79XeFit6Q8RnvKXkVp7aqVxKe6QZi31oTU1hh5nMiN",
+      "blockHash": "2PfUMyQvAhqvrWHUsqrUrPc81XLyBsG9gcQGJ1n2h9iN",
+      "executor": "proofbound-dev-2026.testnet",
+      "logs": [],
+      "gasBurnt": "223182562500",
+      "tokensBurntYocto": "0"
+    }
+  ]
+}

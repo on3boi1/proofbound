@@ -12,7 +12,9 @@
 - [x] Verify `proofbound.testnet` and reach Meteor Web from the local testnet selector.
 - [x] Finalize Atlas NFT #1 and verify the receipt, owner and initial Fuel in Chrome.
 - [ ] Verify independently controlled browser wallets for the owner and customer demo accounts.
-- [ ] Capture finalized activation, private research, paid hire, settlement with Earn-to-Refill, and transfer evidence.
+- [x] Capture finalized activation and verify both testnet quotes.
+- [x] Walk through Atlas in the Chrome marketplace and its public profile.
+- [ ] Capture private research, paid hire, settlement with Earn-to-Refill, and transfer evidence.
 - [ ] Approve implementation push to the public repository.
 - [ ] Human publishes X demo with an authentic video, event name and tags.
 - [ ] Confirm team details, mainnet payout account and contact consent. Review live rules and exact payload.
