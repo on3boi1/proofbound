@@ -97,6 +97,26 @@ fn rejects(f: impl FnOnce()) {
 }
 
 #[test]
+fn authorized_executor_starting_a_missing_job_panics_before_changing_state() {
+    let (mut contract, token) = active();
+    let job_id = "proofbound-permission-probe-20261114".to_string();
+    let before = contract.get_agent(token.clone()).unwrap();
+    call("executor.testnet", 0);
+    let panic = catch_unwind(AssertUnwindSafe(|| contract.start_job(job_id.clone())))
+        .expect_err("the probe job must be absent");
+    let message = panic
+        .downcast_ref::<String>()
+        .map(String::as_str)
+        .or_else(|| panic.downcast_ref::<&str>().copied());
+    assert_eq!(message, Some("Unknown job"));
+    assert!(contract.get_job(job_id).is_none());
+    let after = contract.get_agent(token).unwrap();
+    assert_eq!(before.active_jobs, after.active_jobs);
+    assert_eq!(before.reserved_fuel, after.reserved_fuel);
+    assert_eq!(before.available_fuel, after.available_fuel);
+}
+
+#[test]
 fn repeated_mints_have_unique_nft_identities_and_no_collection_cap() {
     let mut c = setup();
     for n in 1..=128 {

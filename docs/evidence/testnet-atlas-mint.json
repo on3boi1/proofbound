@@ -1,0 +1,130 @@
+{
+  "phase": "final-success",
+  "txHash": "HcdKs9anEs93H8Vw1Pyqaf5gck7rvdB2qmYXsa28djJn",
+  "signer": "proofbound-dev-2026.testnet",
+  "receiver": "contract.proofbound-dev-2026.testnet",
+  "preflightBlock": {
+    "height": 277681200,
+    "hash": "9SaaDo8ii8qCqy2MKboWqGGuyJ7MP8ge5DRm3B8uKKRE"
+  },
+  "balanceBeforeYocto": "4823734788489151000000000",
+  "storageReserveYocto": "1820000000000000000000",
+  "gasUpfrontEstimateYocto": "100919614910688500000000",
+  "mintTotalYocto": "160000000000000000000000",
+  "attachedGas": "100000000000000",
+  "initialSupply": "0",
+  "status": "FINAL",
+  "network": "testnet",
+  "signerPublicKey": "ed25519:FNjvjHjhvV252B3uQm844fjPHDRBFRz8tah8cLWGLi72",
+  "explorer": "https://testnet.nearblocks.io/txns/HcdKs9anEs93H8Vw1Pyqaf5gck7rvdB2qmYXsa28djJn",
+  "codeHash": "FEzmypQteUoXXFZ2UAme6nZ8HhtTxAsKjCCA9xGRFWuP",
+  "tokenId": "1",
+  "supply": "1",
+  "feeYocto": "459148475112600000000",
+  "balanceAfterYocto": "4663275640014038400000000",
+  "actions": [
+    {
+      "FunctionCall": {
+        "args": "eyJuYW1lIjoiQXRsYXMiLCJjb25maWdfaGFzaCI6IjJkZjcwYmZmMDAxMGE4ZTdiOGE2MjY1OTljN2I4ZDViYjIwNTQ5OGZlOWY2YzY2OWYyNGIyMGM3NTA4ZTA5MGMifQ==",
+        "deposit": "160000000000000000000000",
+        "gas": 100000000000000,
+        "method_name": "mint_agent"
+      }
+    }
+  ],
+  "finalizedBlock": {
+    "height": 277681256,
+    "hash": "E3VqHEGrR2JG4HraL5iuV7NnVQtFerXJHGSHybPv4pif"
+  },
+  "nft": {
+    "token_id": "1",
+    "owner_id": "proofbound-dev-2026.testnet",
+    "metadata": {
+      "title": "Atlas",
+      "description": "PROOFBOUND Research Agent. Ownership controls activation and bounded work. Testnet.",
+      "media": null,
+      "media_hash": null,
+      "copies": 1,
+      "issued_at": "1794673476950",
+      "expires_at": null,
+      "starts_at": null,
+      "updated_at": null,
+      "extra": "{\"specialization\":\"research\",\"template\":\"research-v1\"}",
+      "reference": null,
+      "reference_hash": null
+    },
+    "approved_account_ids": null
+  },
+  "agent": {
+    "token_id": "1",
+    "owner_id": "proofbound-dev-2026.testnet",
+    "name": "Atlas",
+    "specialization": "research",
+    "template_id": "research-v1",
+    "config_hash": "2df70bff0010a8e7b8a626599c7b8d5bb205498fe9f6c669f24b20c7508e090c",
+    "config_version": 1,
+    "ownership_epoch": 1,
+    "mode": "private",
+    "active": false,
+    "transfer_pending": false,
+    "max_concurrent": 3,
+    "max_fuel_per_job": 8000,
+    "service_fee": "10000000000000000000000",
+    "reinvest_bps": 0,
+    "available_fuel": 100000,
+    "reserved_fuel": 0,
+    "active_jobs": 0,
+    "lifetime": {
+      "completed_personal": 0,
+      "completed_paid": 0,
+      "failed_personal": 0,
+      "failed_paid": 0,
+      "reputation_events": 0
+    },
+    "configuration_performance": {
+      "completed_personal": 0,
+      "completed_paid": 0,
+      "failed_personal": 0,
+      "failed_paid": 0,
+      "reputation_events": 0
+    },
+    "epoch_performance": {
+      "completed_personal": 0,
+      "completed_paid": 0,
+      "failed_personal": 0,
+      "failed_paid": 0,
+      "reputation_events": 0
+    },
+    "lifetime_service_revenue": "0",
+    "created_at_ns": "1794673476950352318"
+  },
+  "receipts": [
+    {
+      "id": "HcdKs9anEs93H8Vw1Pyqaf5gck7rvdB2qmYXsa28djJn",
+      "blockHash": "EXeAT7x7GLyNFKSQwtUU3UMXNicExgCzp1b73DkUZxb3",
+      "executor": "proofbound-dev-2026.testnet",
+      "logs": [],
+      "gasBurnt": "313161657505",
+      "tokensBurntYocto": "31316165750500000000"
+    },
+    {
+      "id": "A77EPDigiVyjNE7hkZs4F2bVu4H1wGNkrP87pgwQEhap",
+      "blockHash": "7tKgDdHK2a4hXFM2S9RAnc2nETk3jnQSJ4r9AYuBcAuD",
+      "executor": "contract.proofbound-dev-2026.testnet",
+      "logs": [
+        "EVENT_JSON:{\"standard\":\"nep171\",\"version\":\"1.0.0\",\"event\":\"nft_mint\",\"data\":[{\"owner_id\":\"proofbound-dev-2026.testnet\",\"token_ids\":[\"1\"],\"memo\":\"Agent identity minted\"}]}",
+        "EVENT_JSON:{\"standard\":\"proofbound\",\"version\":\"1.0.0\",\"event\":\"agent_minted\",\"data\":[{\"agent\":{\"token_id\":\"1\",\"owner_id\":\"proofbound-dev-2026.testnet\",\"name\":\"Atlas\",\"specialization\":\"research\",\"template_id\":\"research-v1\",\"config_hash\":\"2df70bff0010a8e7b8a626599c7b8d5bb205498fe9f6c669f24b20c7508e090c\",\"config_version\":1,\"ownership_epoch\":1,\"mode\":\"private\",\"active\":false,\"transfer_pending\":false,\"max_concurrent\":3,\"max_fuel_per_job\":8000,\"service_fee\":\"10000000000000000000000\",\"reinvest_bps\":0,\"available_fuel\":100000,\"reserved_fuel\":0,\"active_jobs\":0,\"lifetime\":{\"completed_personal\":0,\"completed_paid\":0,\"failed_personal\":0,\"failed_paid\":0,\"reputation_events\":0},\"configuration_performance\":{\"completed_personal\":0,\"completed_paid\":0,\"failed_personal\":0,\"failed_paid\":0,\"reputation_events\":0},\"epoch_performance\":{\"completed_personal\":0,\"completed_paid\":0,\"failed_personal\":0,\"failed_paid\":0,\"reputation_events\":0},\"lifetime_service_revenue\":\"0\",\"created_at_ns\":\"1794673476950352318\"}}]}"
+      ],
+      "gasBurnt": "4278323093621",
+      "tokensBurntYocto": "427832309362100000000"
+    },
+    {
+      "id": "EY7itvzDiKbw3qypDWfNJaim5Q5epm1nkTWrk2dQMRc9",
+      "blockHash": "DinCMu9hDgsvJTo3tiVPdiYp33DA7JigSk9zYWEywKc7",
+      "executor": "proofbound-dev-2026.testnet",
+      "logs": [],
+      "gasBurnt": "223182562500",
+      "tokensBurntYocto": "0"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Proposed testnet mint-to-settlement run
 
-The dedicated contract is deployed at `contract.proofbound-dev-2026.testnet` with an initial NFT supply of zero. The two separately approved service setup transactions are also final. [Deployment evidence](evidence/testnet-deployment.json) · [Service setup evidence](evidence/testnet-service-setup.json)
+The dedicated contract is deployed at `contract.proofbound-dev-2026.testnet`. The service setup transactions and the single approved mint of Atlas NFT #1 are final. [Deployment evidence](evidence/testnet-deployment.json) · [Service setup evidence](evidence/testnet-service-setup.json) · [Atlas mint](evidence/testnet-atlas-mint.json)
 
 ## Stage 1: Service account setup verified
 
@@ -37,21 +37,23 @@ Both approved calls used the executor FunctionCall key on `exec.proofbound-dev-2
 
 The combined fee was **0.0001834312719716 testnet NEAR** against a **0.005** ceiling. The executor now has **0.1998165687280284** testnet NEAR and **0.0498165687280284** remaining key allowance. These results establish method allowlist enforcement. Successful execution of a real queued job remains to be verified. [RPC receipts](evidence/testnet-restricted-key-probes.json)
 
+The Rust regression test catches `Unknown job` after the executor passes the role check and verifies that the existing agent's job count and Fuel are unchanged. The byte-identical release WASM, with the finalized contract `STATE` record, reviewed executor predecessor and probe arguments, reproduced an `unreachable` trap after reading the missing job key. No write host call ran. The release uses `panic = "abort"`. The live receipt establishes a finalized failure and the missing-job readback establishes the state outcome. It does not expose a human-readable contract error.
+
 ## Stage 2: Approve the test run
 
-The proposed owner is `proofbound-dev-2026.testnet` and the customer and transfer recipient is `proofbound.testnet`. Every call targets `contract.proofbound-dev-2026.testnet` on testnet. Use one private research job and one paid marketplace job, with at most one live model request per job. The customer approves NEP-413 in Meteor. The owner needs a verified app session as well. Use an off-chain NEP-413 signature from the existing owner keychain to authenticate a local client if a browser owner wallet is unavailable. Keep keychain material in the keychain. Keep worker writes disabled pending lifecycle approval.
+The owner is `proofbound-dev-2026.testnet`. The proposed customer and transfer recipient is `proofbound.testnet`. Every call targets `contract.proofbound-dev-2026.testnet` on testnet. Use one private research job and one paid marketplace job, with at most one live model request per job. The owner authenticated to the local production app with an off-chain NEP-413 signature through the existing keychain. The worker confirmed the finalized mint, and Chrome showed Atlas under My Agents with 100,000 Fuel and paused execution. The customer still needs to approve the NEP-413 message in Meteor. Keep worker writes disabled pending lifecycle approval.
 
 | Order | Signing account | Method on the deployed contract | Attached testnet NEAR |
 |---|---|---|---:|
-| 1 | Owner wallet | `mint_agent({"name":"Atlas","config_hash":"2df70bff0010a8e7b8a626599c7b8d5bb205498fe9f6c669f24b20c7508e090c"})` | 0.16 |
-| 2 | Owner wallet | `configure_agent` with the minted `token_id`, `mode:"hybrid"`, `active:true`, `max_concurrent:3`, `max_fuel_per_job:8000`, `service_fee:"10000000000000000000000"`, `reinvest_bps:2000`, `config_hash:"36cc9c4e4f07d10c2c5463e3dec7c82adc29e5dc6ee88c3e5e69fffee63f94fb"` | 1 yoctoNEAR |
+| 1 (finalized) | Owner wallet | `mint_agent({"name":"Atlas","config_hash":"2df70bff0010a8e7b8a626599c7b8d5bb205498fe9f6c669f24b20c7508e090c"})` | 0.16 |
+| 2 | Owner wallet | `configure_agent` with `token_id:"1"`, `mode:"hybrid"`, `active:true`, `max_concurrent:3`, `max_fuel_per_job:8000`, `service_fee:"10000000000000000000000"`, `reinvest_bps:2000`, `config_hash:"36cc9c4e4f07d10c2c5463e3dec7c82adc29e5dc6ee88c3e5e69fffee63f94fb"` | 1 yoctoNEAR |
 | 3 | Owner wallet | `submit_job` for private research, using the finalized configuration version, reviewed request hash and quote deadline | 0.02 |
 | 4–6 | Executor, executor, verifier | `start_job`, `submit_result`, `verify_job` for the private job in order | 0 each |
 | 7 | Customer wallet | `submit_job` for one paid marketplace hire, using the finalized configuration version, reviewed request hash and quote deadline | 0.038 |
 | 8–10 | Executor, executor, verifier | `start_job`, `submit_result`, `verify_job` for the marketplace job in order | 0 each |
-| 11 | Owner wallet | `nft_transfer` with the minted `token_id`, `receiver_id:"proofbound.testnet"`, `approval_id:null`, and `memo:null` after both jobs settle and all reservations clear | 1 yoctoNEAR |
+| 11 | Owner wallet | `nft_transfer` with `token_id:"1"`, `receiver_id:"proofbound.testnet"`, `approval_id:null`, and `memo:null` after both jobs settle and all reservations clear | 1 yoctoNEAR |
 
-The mint uses the default Atlas instructions displayed in the web form, with `near-rpc`, `near-docs`, and `calculator`. The worker generated the mint action against live pricing. The activation and transfer were staged in memory using token `"1"` as the anticipated first ID. Confirm the actual token from the mint receipt.
+The finalized mint uses the default Atlas instructions from the web form, with `near-rpc`, `near-docs`, and `calculator`. The mint cost **0.0004591484751126 testnet NEAR** in fees. The worker staged the activation action against the actual token and its stored configuration. Activation uses **100 Tgas**, changes the configuration to Hybrid, and makes Atlas publicly discoverable. It does not submit a job. Review jobs individually after activation.
 
 | Transaction | Exact argument fields to review once upstream state exists |
 |---|---|
@@ -61,7 +63,7 @@ The mint uses the default Atlas instructions displayed in the web form, with `ne
 | Verifier call, once per job | `verify_job({job_id,accepted,actual_fuel,output_hash,evidence_hash,failure_code})`, using the verifier result and actual metering. On success `failure_code:null`. |
 | Optional withdrawal after separately reviewed settlement | `withdraw({})`, owner signer, **1 yoctoNEAR** attached and **100 Tgas**. It withdraws the owner's entire claimable balance. Confirm its exact amount with `get_balance` before approval, then verify the transfer and callback receipts. |
 
-Job IDs bind to the requesting account and a request key. Job escrow commitments bind to the final configuration and the live ten-minute quote deadline. Result hashes and Fuel come from execution. Generate and review these values at the relevant stage. The five wallet calls and six service calls attach **0.218 testnet NEAR plus 2 yoctoNEAR** across both wallets. Use **0.08 testnet NEAR** as the proposed combined fee ceiling for the eleven calls, excluding withdrawal. Refresh fees and check the remaining service allowances after each call.
+Job IDs bind to the requesting account and a request key. Job escrow commitments bind to the final configuration and the live ten-minute quote deadline. Result hashes and Fuel come from execution. Generate and review these values at the relevant stage. The remaining four wallet calls and six service calls attach **0.058 testnet NEAR plus 2 yoctoNEAR** across both wallets. The previously proposed **0.08 testnet NEAR** combined fee ceiling can cover the remaining flow, excluding withdrawal. Refresh fees and check the remaining service allowances after each call.
 
 The worker attaches **30 Tgas** for service calls and stages **100 Tgas** for wallet calls. Testnet's minimum gas purchase price of 1 billion yoctoNEAR per gas would charge more than 0.10 NEAR up front at 100 Tgas, exceeding the service allowance. The 30 Tgas limit fits the installed 0.05 NEAR allowance at the observed parameters. Transaction execution within this limit remains to be verified live. Check current gas purchase costs, allowances and wallet balances before approval. The customer quote contains 0.01 service, 0.008 maximum compute and 0.02 storage. Review each transaction's dynamic token ID, hashes, deadline and exact quote before signing. Use real result and evidence commitments and report the measured Fuel and actual verification outcome. If research or verification fails, the existing refund path uses the same verifier method with a failed outcome. Stop on an ambiguous onchain result and reconcile before signing anything further.
 
