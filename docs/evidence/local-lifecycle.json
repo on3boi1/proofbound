@@ -1,0 +1,91 @@
+{
+  "recordedAt": "2026-11-14T11:03:49.376Z",
+  "scope": "Local HTTP integration, deterministic research and simulated balances",
+  "agent": {
+    "tokenId": "1",
+    "initialFuel": 100000,
+    "finalFuel": 204586,
+    "newOwner": "buyer.local",
+    "ownershipEpoch": 2
+  },
+  "privateJob": {
+    "id": "5aae35ee-81fd-4544-a404-ca0030acc0e3",
+    "fuel": 814,
+    "evidenceHash": "6232977c90b5ae860313a28c865450bf98e3082125ecc52ab9a8aa60d448a117"
+  },
+  "concurrency": {
+    "observedInFlight": 3,
+    "jobIds": [
+      "e4e3b60b-5132-4de3-beb2-01aebeed0e6a",
+      "a4e26552-62a5-4869-8901-43cd2d82f614",
+      "fd7cd743-94f1-4caa-8a06-72a4ec533e18"
+    ],
+    "activeTransferDenied": true
+  },
+  "settlements": [
+    {
+      "jobId": "e4e3b60b-5132-4de3-beb2-01aebeed0e6a",
+      "customer": "customer-one.local",
+      "deposit": "38000000000000000000000",
+      "evidenceHash": "0c3359c6cb3b1bc4f48cc15ffe0a711f7bfd19d02b6360a330feeeab1876ff75",
+      "settlement": {
+        "serviceFee": "10000000000000000000000",
+        "ownerGross": "9000000000000000000000",
+        "ownerClaimable": "7200000000000000000000",
+        "platformFee": "1000000000000000000000",
+        "computeCharged": "830000000000000000000",
+        "customerRefund": "7170000000000000000000",
+        "reinvested": "1800000000000000000000",
+        "fuelAdded": 1800,
+        "storageCharged": "20000000000000000000000",
+        "settledAt": "2026-11-14T11:03:49.298Z",
+        "network": "local",
+        "transactionHash": null
+      }
+    },
+    {
+      "jobId": "a4e26552-62a5-4869-8901-43cd2d82f614",
+      "customer": "customer-two.local",
+      "deposit": "38000000000000000000000",
+      "evidenceHash": "b588caf1bb859a61f544a6cfeab5a28bed3e4a2a1a6a141cf43801dd21ad6ffb",
+      "settlement": {
+        "serviceFee": "10000000000000000000000",
+        "ownerGross": "9000000000000000000000",
+        "ownerClaimable": "7200000000000000000000",
+        "platformFee": "1000000000000000000000",
+        "computeCharged": "830000000000000000000",
+        "customerRefund": "7170000000000000000000",
+        "reinvested": "1800000000000000000000",
+        "fuelAdded": 1800,
+        "storageCharged": "20000000000000000000000",
+        "settledAt": "2026-11-14T11:03:49.302Z",
+        "network": "local",
+        "transactionHash": null
+      }
+    },
+    {
+      "jobId": "fd7cd743-94f1-4caa-8a06-72a4ec533e18",
+      "customer": "customer-three.local",
+      "deposit": "38000000000000000000000",
+      "evidenceHash": "5912cb36974f0ef6f0c51f55bce02abf3f2715aa29e828fba6b67cd20755528f",
+      "settlement": {
+        "serviceFee": "10000000000000000000000",
+        "ownerGross": "9000000000000000000000",
+        "ownerClaimable": "7200000000000000000000",
+        "platformFee": "1000000000000000000000",
+        "computeCharged": "830000000000000000000",
+        "customerRefund": "7170000000000000000000",
+        "reinvested": "1800000000000000000000",
+        "fuelAdded": 1800,
+        "storageCharged": "20000000000000000000000",
+        "settledAt": "2026-11-14T11:03:49.305Z",
+        "network": "local",
+        "transactionHash": null
+      }
+    }
+  ],
+  "claimableAfterTransfer": "21600000000000000000000",
+  "payoutRedirectionDenied": true,
+  "formerOwnerDenied": true,
+  "buyerReactivated": true
+}

@@ -147,3 +147,21 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+.env.local
+
+# PROOFBOUND runtime data and contract outputs
+.data/
+data/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+contracts/**/target/
+target/
+.near-credentials/
+credentials/
+*.pem
+*.key
+submission.private.json
+artifacts/private/
+.vercel/

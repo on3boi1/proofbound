@@ -1,0 +1,69 @@
+{
+  "checkedAt": "2026-11-14T10:49:29.455Z",
+  "scope": "Research runtime and local ledger with no blockchain writes.",
+  "provider": "near-ai",
+  "model": "Qwen/Qwen3-VL-30B-A3B-Instruct",
+  "requestId": "812321be-4e0c-410e-815d-45ff8fb857b1",
+  "totalTokens": 1631,
+  "estimatedCostUsd": "0.00053745",
+  "checks": [
+    {
+      "name": "Required deliverables",
+      "passed": true,
+      "detail": "Report includes a title, summary, at least two findings, and explicit uncertainties."
+    },
+    {
+      "name": "Approved citations",
+      "passed": true,
+      "detail": "All citations resolve to source snapshots fetched by the approved tools."
+    },
+    {
+      "name": "Evidence integrity",
+      "passed": true,
+      "detail": "Every source content hash matches its captured bytes."
+    },
+    {
+      "name": "Source freshness",
+      "passed": true,
+      "detail": "Live source snapshots were retrieved within 15 minutes."
+    },
+    {
+      "name": "Numerical consistency",
+      "passed": true,
+      "detail": "Each integer operation reproduces exactly and its operands match fields in the captured accounting policy. Prose claims are not mathematically certified."
+    },
+    {
+      "name": "Execution allowance",
+      "passed": true,
+      "detail": "Metered tokens are positive, reconcile, and remain within the reserved Fuel cap."
+    },
+    {
+      "name": "Provider labeling",
+      "passed": true,
+      "detail": "Fixture execution and live provider usage cannot be presented interchangeably."
+    }
+  ],
+  "jobId": "812321be-4e0c-410e-815d-45ff8fb857b1",
+  "outputHash": "5ec38c2c27cc16a0367a78401d492d5c0630aed20ef84ba40c0f6e4f375ab0ab",
+  "evidenceHash": "63a6ecf5ca8a483c2d7ec2ced76e2b040dc9cd18d0d4750cff9b2795afb5bdd6",
+  "sources": [
+    {
+      "id": "fuel-policy",
+      "title": "PROOFBOUND accepted accounting policy",
+      "url": "proofbound://economics/v1",
+      "sha256": "dc24df29ef5deb95fedca239d2ebee534797462e3dff428ea01e7c044fba7311"
+    },
+    {
+      "id": "near-nft",
+      "title": "NEAR official NFT standards",
+      "url": "https://docs.near.org/primitives/nft/standard",
+      "sha256": "9deddd605bac2be94f3af79f239df14c2dd3b81e90dbb142b061ae29e7bfe289"
+    },
+    {
+      "id": "near-network",
+      "title": "NEAR testnet public node status",
+      "url": "https://rpc.testnet.near.org",
+      "sha256": "175ca38cee91b2f0a46f11c0037605270308d7cbafeaff87e0a79900d88c9847"
+    }
+  ]
+}

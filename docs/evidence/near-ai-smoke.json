@@ -1,0 +1,28 @@
+{
+  "checkedAt": "2026-11-14T05:34:24.079Z",
+  "endpoint": "https://cloud-api.near.ai/v1",
+  "model": "Qwen/Qwen3-VL-30B-A3B-Instruct",
+  "requestId": "348cadd8-8ceb-4780-ab22-4759dc014502",
+  "status": 200,
+  "usage": {
+    "prompt_tokens": 16,
+    "total_tokens": 21,
+    "completion_tokens": 5,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 16
+    }
+  },
+  "output": "PROOFBOUND READY",
+  "finishReason": "stop",
+  "catalogPricing": {
+    "input": 0.15,
+    "output": 0.55,
+    "prompt": "0.00000015",
+    "completion": "0.00000055",
+    "image": "0",
+    "request": "0",
+    "input_cache_read": "0.00000003"
+  },
+  "note": "Single capped live NEAR AI request. Provider credits are external to testnet Fuel. No secrets in this receipt."
+}
