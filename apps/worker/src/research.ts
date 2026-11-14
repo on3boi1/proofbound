@@ -8,6 +8,16 @@ import { calculate } from "./verifier.ts";
 import { hashObject, sha256 } from "./hash.ts";
 
 const PROVIDER_URL="https://cloud-api.near.ai/v1/chat/completions";
+const CREDIT_DEMO_BUDGET = "near-ai:hackathon-credit-demo";
+type ProviderBudget = { requests: number; reservedTokens: number; exhausted?: true };
+
+export function assertCreditDemoAvailable(store: Store, config: RuntimeConfig, fuelBudget: number): void {
+  const budget = store.get<ProviderBudget>("provider-budget", CREDIT_DEMO_BUDGET);
+  invariant(!budget?.exhausted, "PROVIDER_CREDITS_EXHAUSTED", "Research is paused because the existing NEAR AI credits are unavailable.", 503);
+  invariant((budget?.requests ?? 0) < config.maxLiveRequests &&
+    (budget?.reservedTokens ?? 0) + fuelBudget <= config.maxLiveTokens,
+  "PROVIDER_BUDGET", "The demo's research allowance has been reached.", 429);
+}
 const DOCS_URL="https://docs.near.org/primitives/nft/standard";
 export function assertToolAllowed(allowed: ToolId[], requested: string): void {
   invariant(allowed.includes(requested as ToolId),"TOOL_NOT_ALLOWED",`Tool ${requested} is not approved. Financial actions, arbitrary URLs, shell access and other customers' records are unavailable.`,403);
@@ -64,12 +74,32 @@ export class ResearchProvider {
     const user=JSON.stringify({request:job.input,ownerGuidance:job.configSnapshot.instructions,sources:sources.map(s=>({id:s.id,title:s.title,content:s.content}))});
     const inputByteBound=Buffer.byteLength(system+user),maxOutput=Math.min(1800,job.fuelBudget-inputByteBound-100);
     invariant(maxOutput>=500,"BUDGET_TOO_SMALL","Increase this request's Fuel budget for live research. The conservative input-byte bound leaves insufficient output allowance.");
-    const date=new Date().toISOString().slice(0,10),budgetKey=`near-ai:${date}`;
-    this.store.transaction(()=>{const budget=this.store.get<{requests:number;reservedTokens:number}>("provider-budget",budgetKey)??{requests:0,reservedTokens:0};invariant(budget.requests<this.config.maxLiveRequests&&budget.reservedTokens+job.fuelBudget<=this.config.maxLiveTokens,"PROVIDER_BUDGET","The operator's daily live inference cap has been reached.",429);this.store.put("provider-budget",budgetKey,{requests:budget.requests+1,reservedTokens:budget.reservedTokens+job.fuelBudget});});
+    const date = new Date().toISOString().slice(0, 10);
+    const budgetKey = this.config.creditDemo ? CREDIT_DEMO_BUDGET : `near-ai:${date}`;
+    this.store.transaction(() => {
+      const budget = this.store.get<ProviderBudget>("provider-budget", budgetKey) ?? { requests: 0, reservedTokens: 0 };
+      if (this.config.creditDemo) assertCreditDemoAvailable(this.store, this.config, job.fuelBudget);
+      else invariant(budget.requests < this.config.maxLiveRequests &&
+        budget.reservedTokens + job.fuelBudget <= this.config.maxLiveTokens,
+      "PROVIDER_BUDGET", "The operator's daily live inference cap has been reached.", 429);
+      this.store.put("provider-budget", budgetKey, {
+        requests: budget.requests + 1, reservedTokens: budget.reservedTokens + job.fuelBudget,
+      });
+    });
     let response:Response;
     try{response=await fetch(PROVIDER_URL,{method:"POST",headers:{"content-type":"application/json",Authorization:`Bearer ${key}`,"X-Request-Id":job.id},body:JSON.stringify({model:this.config.model,messages:[{role:"system",content:system},{role:"user",content:user}],temperature:0,max_tokens:maxOutput,stream:false}),signal,redirect:"error"});}
     catch{throw new AppError("PROVIDER_UNAVAILABLE","NEAR AI request failed or timed out. The operator cap prevents automatic repeat spending.",502);}
-    if(!response.ok){await response.body?.cancel();throw new AppError("PROVIDER_ERROR",`NEAR AI returned HTTP ${response.status}. No provider response body or credential is exposed.`,502);}
+    if (!response.ok) {
+      await response.body?.cancel();
+      if (this.config.creditDemo && [401, 402, 403].includes(response.status)) {
+        this.store.transaction(() => {
+          const budget = this.store.get<ProviderBudget>("provider-budget", budgetKey)!;
+          this.store.put("provider-budget", budgetKey, { ...budget, exhausted: true });
+        });
+        throw new AppError("PROVIDER_CREDITS_EXHAUSTED", "Research is paused because the existing NEAR AI credits are unavailable.", 503);
+      }
+      throw new AppError("PROVIDER_ERROR", `NEAR AI returned HTTP ${response.status}.`, 502);
+    }
     const data=JSON.parse(await boundedResponse(response,100000)),content=data.choices?.[0]?.message?.content;
     invariant(typeof content==="string","INVALID_PROVIDER_RESPONSE","NEAR AI returned no report text.",502);
     let report:ResearchReport;try{report=JSON.parse(content.trim().replace(/^```(?:json)?\s*/i,"").replace(/\s*```$/,""));}catch{throw new AppError("INVALID_REPORT","NEAR AI did not return valid structured JSON.",502);}

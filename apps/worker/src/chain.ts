@@ -105,10 +105,10 @@ export class Chain {
     const op=this.core.store.get<PendingOperation>("operation",operationId);invariant(op&&op.accountId===accountId,"UNKNOWN_OPERATION","Transaction operation not found for this session.",404);if(op.confirmedHash){invariant(op.confirmedHash===transactionHash,"REPLAY_CONFLICT","This operation was confirmed with a different transaction.",409);return op.result;}
     invariant(/^[1-9A-HJ-NP-Za-km-z]{32,64}$/.test(transactionHash),"INVALID_TRANSACTION","A valid NEAR transaction hash is required.");
     const outcome=await this.rpc<any>("tx",{tx_hash:transactionHash,sender_account_id:accountId,wait_until:"FINAL"});
-    invariant(outcome.transaction?.signer_id===accountId&&outcome.transaction?.receiver_id===this.config.contractId,"TX_MISMATCH","Transaction signer or contract differs from this operation.",403);
+    invariant(outcome.final_execution_status==="FINAL"&&outcome.transaction?.hash===transactionHash&&outcome.transaction?.signer_id===accountId&&outcome.transaction?.receiver_id===this.config.contractId,"TX_MISMATCH","The finalized transaction does not match this signer and contract.",403);
     invariant(outcome.status&&typeof outcome.status==="object"&&"SuccessValue"in outcome.status&&!(outcome.receipts_outcome??[]).some((r:any)=>r.outcome?.status?.Failure),"TX_FAILED","The transaction did not complete successfully.",409);
     const action=outcome.transaction.actions?.[0]?.FunctionCall,expected=op.intent.actions[0].params;
-    invariant(outcome.transaction.actions?.length===1&&action?.method_name===expected.methodName&&String(action.deposit)===expected.deposit&&canonical(JSON.parse(Buffer.from(action.args,"base64").toString()))===canonical(expected.args),"TX_MISMATCH","Confirmed transaction actions do not match the reviewed operation.",403);
+    invariant(outcome.transaction.actions?.length===1&&action?.method_name===expected.methodName&&String(action.deposit)===expected.deposit&&String(action.gas)===expected.gas&&canonical(JSON.parse(Buffer.from(action.args,"base64").toString()))===canonical(expected.args),"TX_MISMATCH","Confirmed transaction actions do not match the reviewed operation.",403);
     const used=this.core.store.get<string>("transaction-used",transactionHash);invariant(!used||used===operationId,"TX_REPLAY","This transaction already confirmed another operation.",409);
     let result:unknown;
     if(op.kind==="mint"){

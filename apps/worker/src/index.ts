@@ -2,11 +2,14 @@ import { createServer, type IncomingMessage, type ServerResponse } from "node:ht
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { ECONOMICS, LOCAL_ACCOUNTS, type JobKind } from "@proofbound/shared";
+import { MAX_WORKER_BODY_BYTES } from "@proofbound/shared/worker-api";
 import { Auth } from "./auth.ts";
 import { Chain } from "./chain.ts";
 import { loadLocalEnvironment, readConfig, type RuntimeConfig } from "./config.ts";
 import { Core } from "./core.ts";
 import { AppError, boundedText, invariant } from "./errors.ts";
+import { createProxyAccess } from "./proxy-access.ts";
+import { assertCreditDemoAvailable } from "./research.ts";
 import { Store } from "./store.ts";
 import { Worker, type ExecutableProvider } from "./worker.ts";
 
@@ -19,7 +22,7 @@ async function bodyOf(request: IncomingMessage): Promise<Record<string, unknown>
   for await (const chunk of request) {
     const bytes = Buffer.from(chunk);
     size += bytes.length;
-    invariant(size <= 16384, "BODY_TOO_LARGE", "Request body exceeds 16 KiB.", 413);
+    invariant(size <= MAX_WORKER_BODY_BYTES, "BODY_TOO_LARGE", "Request body exceeds 16 KiB.", 413);
     chunks.push(bytes);
   }
   let value: unknown;
@@ -37,6 +40,7 @@ export async function startService(config: RuntimeConfig, provider?: ExecutableP
   const worker = new Worker(core, provider, chain);
   const live = config.mode === "testnet";
   const origin = new URL(config.origin).origin;
+  const proxyAccess = config.proxyToken ? createProxyAccess(config.proxyToken) : null;
   const runtime = () => core.runtime(worker.running, worker.activeExecutions);
   const cookie = (token: string, seconds: number) =>
     `${COOKIE}=${token}; HttpOnly; SameSite=Lax; Path=/; Max-Age=${seconds}${origin.startsWith("https:") ? "; Secure" : ""}`;
@@ -44,6 +48,7 @@ export async function startService(config: RuntimeConfig, provider?: ExecutableP
   async function route(req: IncomingMessage, res: ServerResponse) {
     const method = req.method ?? "GET";
     const { pathname, searchParams } = new URL(req.url ?? "/", origin);
+    proxyAccess?.check(req, method, pathname, origin);
     const parts = pathname.split("/").filter(Boolean).map(decodeURIComponent);
     const token = req.headers.cookie?.match(/(?:^|;\s*)proofbound_session=([\w-]+)/)?.[1] ?? null;
     const session = auth.session(token);
@@ -52,6 +57,14 @@ export async function startService(config: RuntimeConfig, provider?: ExecutableP
       return session.accountId;
     };
     if (method !== "GET") invariant(req.headers.origin === origin, "ORIGIN_DENIED", "This request must come from the configured application origin.", 403);
+    // Public browsing and wallet login remain available while demo transactions are disabled.
+    if (proxyAccess && method !== "GET" && !["/api/auth/challenge", "/api/auth/verify", "/api/session", "/api/jobs/quote"].includes(pathname)) {
+      const actor = account();
+      invariant(config.demoAccounts?.has(actor), "DEMO_ACCOUNT_REQUIRED", "This testnet action is available to the designated demo wallets.", 403);
+      invariant(config.allowChainWrites || pathname === "/api/transactions/confirm", "CHAIN_WRITES_DISABLED",
+        "Testnet transactions are paused on this demo.", 503);
+      proxyAccess.limitAccount(actor);
+    }
 
     if (method === "GET" && pathname === "/api/health") return { runtime: runtime() };
     if (method === "GET" && pathname === "/api/bootstrap") {
@@ -154,6 +167,7 @@ export async function startService(config: RuntimeConfig, provider?: ExecutableP
       const body = await bodyOf(req);
       if (live) {
         invariant(worker.canExecute, "WORKER_NOT_AUTHORIZED", "The operator has not enabled testnet execution. Escrow funding is unavailable.", 503);
+        if (config.creditDemo) assertCreditDemoAvailable(store, config, Number(body.fuelBudget ?? ECONOMICS.defaultFuelBudget));
         return chain.submit(actor, body);
       }
       return { job: core.submit(actor, body) };

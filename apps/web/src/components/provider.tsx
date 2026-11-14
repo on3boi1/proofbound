@@ -4,7 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState, ty
 import type { Bootstrap, TransactionIntent } from "@proofbound/shared";
 import type { NearConnector } from "@hot-labs/near-connect";
 import { CheckCircle2, CircleAlert, LoaderCircle, X } from "lucide-react";
-import { api, errorMessage } from "@/lib/api";
+import { api, ApiError, errorMessage } from "@/lib/api";
 import { BRAND } from "@/lib/brand";
 
 type Notice = { message: string; kind: "success" | "error" | "info" };
@@ -33,7 +33,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
     if (refreshInFlight.current) return;
     refreshInFlight.current = true;
     try { setData(await api<Bootstrap>("/bootstrap")); setError(null); }
-    catch (e) { setError(errorMessage(e)); }
+    catch (e) {
+      if (e instanceof ApiError && e.status === 503) setData(null);
+      setError(errorMessage(e));
+    }
     finally { setLoading(false); refreshInFlight.current = false; }
   }, []);
   useEffect(() => { void refresh(); const timer = setInterval(() => { if (document.visibilityState === "visible") void refresh(); }, 4000); return () => clearInterval(timer); }, [refresh]);
