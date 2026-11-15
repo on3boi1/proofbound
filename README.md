@@ -4,7 +4,7 @@ I built PROOFBOUND to answer a question about handing over an AI agent. What sho
 
 [Watch the official NEAR Hackathon demo on X](https://x.com/on3boi_1/status/2121754200661262588) · [Browse the hackathon branch](https://github.com/on3boi1/proofbound/tree/codex/proofbound-hackathon) · [Review the original hackathon commit](https://github.com/on3boi1/proofbound/tree/be6a2193daa01c998647660741ef4418d6e34e72)
 
-The implementation and run instructions are on `codex/proofbound-hackathon`. GitHub opens the initial `main` branch by default.
+The hackathon branch carries the current hosting and reproducibility notes. The pinned commit preserves the original hackathon release.
 
 Requires Node.js 24 and npm 11. The default demo uses SQLite, simulated identities and balances, and deterministic research fixtures.
 
@@ -26,7 +26,7 @@ Atlas #1 is minted and active on NEAR testnet at `contract.proofbound-dev-2026.t
 
 Fuel is prepaid compute credit. Each job reserves a fixed budget and records actual usage. The local workflow reproduces marketplace escrow, the 90/10 service fee split and an optional conversion of the owner's share into Fuel. The verification receipt records source and output hashes, reproducible calculations and budget checks. Transfer revokes the previous owner's operating authority while preserving the public work record. Paid settlement, refill and transfer have local evidence. One real NEAR AI research run used local accounting. [Demo evidence](docs/DEMO_EVIDENCE.md)
 
-The [public PROOFBOUND demo](https://tryproofbound.pages.dev/) runs on Cloudflare Pages Free and reads finalized NEAR testnet data directly. Browse [Atlas #1](https://tryproofbound.pages.dev/agents/1) and its [Agent Passport](https://tryproofbound.pages.dev/passport/1). Connect a testnet wallet to view its public roster. Research execution, hiring, job reports and wallet transactions require the separate execution worker and are unavailable on the public site. Use the local steps above to reproduce the full workflow. [Deployment evidence](docs/evidence/cloudflare-frontend-deployment.json)
+The [public PROOFBOUND demo](https://tryproofbound.pages.dev/) runs on Cloudflare Pages Free and reads finalized NEAR testnet data directly. Browse [Atlas #1](https://tryproofbound.pages.dev/agents/1) and its [Agent Passport](https://tryproofbound.pages.dev/passport/1). Connect a testnet wallet to view its public roster. The hosted demo is read-only. Minting, AI execution, paid transactions, and private job reports require the separate execution worker and are unavailable on Pages. Use the local steps above to reproduce the full workflow. [Deployment evidence](docs/evidence/cloudflare-frontend-deployment.json)
 
 For contract tests and WASM, install Rust with the `wasm32-unknown-unknown` target. On Windows, install the Visual Studio C++ Build Tools, Windows SDK and CMake/Ninja.
 

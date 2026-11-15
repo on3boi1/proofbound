@@ -19,7 +19,7 @@ The build stages the frontend Worker and static files under `.data/cloudflare-pa
 
 ## Publication record
 
-The initial hackathon publication used GitHub's no-reply address and published `be6a2193daa01c998647660741ef4418d6e34e72`. The original remote `main` remains at `7ae2207a034bcaa4fec6e6c6a0a02b797c389e7c`. Open the [hackathon branch](https://github.com/on3boi1/proofbound/tree/codex/proofbound-hackathon) for the implementation.
+The initial hackathon publication used GitHub's no-reply address and published `be6a2193daa01c998647660741ef4418d6e34e72`. The repository started at `7ae2207a034bcaa4fec6e6c6a0a02b797c389e7c`. Open the [hackathon branch](https://github.com/on3boi1/proofbound/tree/codex/proofbound-hackathon) for the implementation.
 
 ## Optional hosted configuration under review
 
