@@ -56,9 +56,9 @@ export interface Job {
   network: Mode; transactionHash: string | null;
 }
 export interface LedgerEntry { id: string; agentId: string | null; jobId: string | null; accountId: string; kind: string; amount: string; fuelDelta: number; timestamp: string; network: Mode; transactionHash: string | null; note: string; }
-export interface PassportEvent { id: string; agentId: string; kind: "mint" | "configuration" | "ownership" | "job" | "security"; timestamp: string; configVersion: number; ownershipEpoch: number; detail: string; evidenceHash: string | null; jobId: string | null; }
+export interface PassportEvent { id: string; agentId: string; kind: "mint" | "configuration" | "ownership" | "job" | "security"; timestamp: string; configVersion: number; ownershipEpoch: number; detail: string; evidenceHash: string | null; jobId: string | null; transactionHash?: string; }
 export interface Session { accountId: string; mode: Mode; expiresAt: string; }
-export interface RuntimeInfo { mode: Mode; providerMode: ProviderMode; contractId: string | null; network: "local" | "testnet"; liveEnabled: boolean; workerRunning: boolean; activeExecutions: number; peakConcurrency: number; disclaimer: string; }
+export interface RuntimeInfo { mode: Mode; providerMode: ProviderMode; contractId: string | null; network: "local" | "testnet"; liveEnabled: boolean; workerRunning: boolean; activeExecutions: number; peakConcurrency: number; disclaimer: string; readOnly?: boolean; }
 export interface Bootstrap { runtime: RuntimeInfo; session: Session | null; agents: Agent[]; jobs: Job[]; ledger: LedgerEntry[]; balance: string; economics: typeof ECONOMICS; localAccounts: readonly string[]; }
 export interface JobQuote { serviceFee: string; computeAllowance: string; storageFee: string; totalDeposit: string; fuelBudget: number; acceptanceCriteria: string[]; refundTerms: string; deadline: string; }
 export interface TransactionIntent { receiverId: string; actions: { type: "FunctionCall"; params: { methodName: string; args: Record<string, unknown>; gas: string; deposit: string; }; }[]; description: string; }

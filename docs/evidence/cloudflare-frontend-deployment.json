@@ -1,0 +1,56 @@
+{
+  "checkedOn": "2026-11-15",
+  "sourceBaseCommit": "be6a2193daa01c998647660741ef4418d6e34e72",
+  "sourceIncludesLocalHostingChanges": true,
+  "publicOrigin": "https://tryproofbound.pages.dev",
+  "deployment": {
+    "project": "tryproofbound",
+    "plan": "Cloudflare Pages Free",
+    "environment": "Production",
+    "branch": "codex/proofbound-hackathon",
+    "deploymentId": "8e02bdf3-fb48-4940-8fe6-c736524ed137",
+    "deployedUtc": "2026-11-15T09:10:28Z",
+    "framework": "Next.js 16.4.6",
+    "adapter": "vinext 1.4.5",
+    "stagedModuleSha256": "85e47f7bda1320c06380ce1fa6a89bf02269ec3ae5b2f197cce279eec1059611",
+    "staticFilesUploaded": 32,
+    "executionWorkerAvailable": false,
+    "chainWritesEnabled": false
+  },
+  "previousWorkersDeployment": {
+    "project": "proofbound",
+    "versionId": "9cf63038-d2e6-4318-bb19-a970c0930da6",
+    "reachableAfterPagesVerification": true
+  },
+  "testnet": {
+    "contract": "contract.proofbound-dev-2026.testnet",
+    "independentFinalizedBlock": 277779714,
+    "atlasId": "1",
+    "atlasOwner": "proofbound-dev-2026.testnet",
+    "atlasMode": "hybrid",
+    "atlasActive": true,
+    "availableFuel": 100000,
+    "passportTransactions": [
+      "HcdKs9anEs93H8Vw1Pyqaf5gck7rvdB2qmYXsa28djJn",
+      "GB6GqYERprss2pKhYWfjAWXrwqWLcArTkK7XqKy2QvVR"
+    ]
+  },
+  "verification": {
+    "browsers": ["Existing Chrome profile", "Independent in-app browser"],
+    "mobileViewportPx": [390, 844],
+    "marketplaceNavigation": true,
+    "passportLinks": true,
+    "meteorViewOnlyAccount": "proofbound.testnet",
+    "canonicalAndSocialMetadataUsePublicOrigin": true,
+    "crossOriginWriteCorsAllowed": false,
+    "readRoutesAndBrandAssets": 200,
+    "jobAndAuthenticationWriteRoutes": 503,
+    "privateAndAdministrativeRoutes": 404,
+    "oldLocalFrontendAndTunnelStoppedBeforeRepeatHttpsChecks": true,
+    "stagingPreviewPortsStoppedBeforeRepeatHttpsChecks": true,
+    "buildFilesScanned": 35,
+    "credentialPatternsOrProtectedPathsDetected": 0,
+    "contractTestsPassed": 30,
+    "applicationTestsPassed": 5
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "checkedOn": "2026-11-14",
+  "releaseCommit": "be6a2193daa01c998647660741ef4418d6e34e72",
+  "repositoryBranch": "https://github.com/on3boi1/proofbound/tree/codex/proofbound-hackathon",
+  "status": "Historical deployment. The temporary hostname was retired on November 15, 2026.",
+  "deployment": {
+    "frontend": "Next.js production build",
+    "nextVersion": "16.4.6",
+    "ingress": "One frontend-only Cloudflare Quick Tunnel",
+    "cloudflaredVersion": "2026.11.0",
+    "connectorRegisteredAt": "2026-11-14T21:07:04Z",
+    "startupLog": [
+      "Next.js 16.4.6: Ready in 429ms",
+      "2026-11-14T21:07:04Z Registered frontend-only tunnel connection"
+    ],
+    "worker": "Loopback only, reached through the authenticated Next.js proxy",
+    "jobExecutionEnabled": false,
+    "chainWritesEnabled": false
+  },
+  "httpsChecks": [
+    { "route": "/", "status": 200 },
+    { "route": "/explore", "status": 200 },
+    { "route": "/favicon.ico", "status": 200 },
+    { "route": "/api/bootstrap", "status": 200, "atlasId": "1", "atlasMode": "hybrid", "atlasActive": true, "workerRunning": false },
+    { "route": "/api/health", "status": 404 },
+    { "route": "/api/jobs", "status": 401, "condition": "No wallet session" },
+    { "route": "/api/auth/challenge", "status": 403, "condition": "Mismatched origin" },
+    { "route": "/api/auth/challenge", "status": 200, "condition": "Same origin" }
+  ],
+  "browser": {
+    "chrome": "Homepage and marketplace loaded. Real Atlas #1 visible. Meteor Web connection reached the user approval prompt.",
+    "independentSession": "Homepage and marketplace loaded. Real Atlas #1 visible. At a 390px mobile viewport the landing page scroll width was 375px.",
+    "branding": "Homepage title PROOFBOUND. ICO, SVG and Apple touch icon present."
+  },
+  "offChainAuthentication": {
+    "network": "testnet",
+    "account": "proofbound-dev-2026.testnet",
+    "walletChallengeVerified": true,
+    "activeAtlasVisible": true,
+    "logoutVerified": true,
+    "blockchainTransaction": false
+  },
+  "localChecks": {
+    "directWorkerRequestWithoutProxyCredential": 401,
+    "sensitivePaths": "The environment and SQLite URLs returned the generic HTML page-not-found view.",
+    "unavailableWorkerResponse": 503,
+    "unavailableWorkerCheckedIn": "Independent browser and HTTP test in a separate local instance"
+  }
+}

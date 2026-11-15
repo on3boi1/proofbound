@@ -10,6 +10,7 @@ import { BRAND } from "@/lib/brand";
 type Notice = { message: string; kind: "success" | "error" | "info" };
 interface ContextValue {
   data: Bootstrap | null; loading: boolean; error: string | null; walletBusy: boolean;
+  walletAccount: string | null;
   refresh: () => Promise<void>; connect: (account?: string) => Promise<void>; disconnect: () => Promise<void>;
   mutate: <T>(path: string, body?: unknown, method?: string) => Promise<T>;
   pendingOperation: string | null;
@@ -24,6 +25,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [walletBusy, setWalletBusy] = useState(false);
+  const [walletAccount, setWalletAccount] = useState<string | null>(null);
   const [notice, setNotice] = useState<Notice | null>(null);
   const [pendingOperation, setPendingOperation] = useState<string | null>(null);
   const connector = useRef<NearConnector | null>(null);
@@ -39,7 +41,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
     finally { setLoading(false); refreshInFlight.current = false; }
   }, []);
-  useEffect(() => { void refresh(); const timer = setInterval(() => { if (document.visibilityState === "visible") void refresh(); }, 4000); return () => clearInterval(timer); }, [refresh]);
+  const readOnly = data?.runtime.readOnly === true;
+  useEffect(() => { void refresh(); }, [refresh]);
+  useEffect(() => { const timer = setInterval(() => { if (document.visibilityState === "visible") void refresh(); }, readOnly ? 60000 : 4000); return () => clearInterval(timer); }, [readOnly, refresh]);
   useEffect(() => { setPendingOperation(sessionStorage.getItem(pendingStorageKey)); }, []);
   useEffect(() => { if (!notice) return; const timer = setTimeout(() => setNotice(null), notice.kind === "error" ? 10000 : 6000); return () => clearTimeout(timer); }, [notice]);
 
@@ -74,6 +78,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
         const accounts = await wallet.getAccounts();
         const accountId = accounts[0]?.accountId;
         if (!accountId) throw new Error("Choose a NEAR testnet wallet account to continue.");
+        if (readOnly) {
+          setWalletAccount(accountId);
+          notify("Wallet connected for viewing public testnet data.");
+          return;
+        }
         const challenge = await api<{ challengeId: string; message: string; nonce: number[]; recipient: string; state: string }>("/auth/challenge", { method: "POST", body: JSON.stringify({ accountId }) });
         const signed = await wallet.signMessage({ message: challenge.message, recipient: challenge.recipient, nonce: new Uint8Array(challenge.nonce) });
         if (!signed) throw new Error("The wallet did not return a signed message. Return here after approving the sign-in request and retry.");
@@ -82,13 +91,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
       }
       await refresh();
     } catch (e) { notify(errorMessage(e), "error"); } finally { setWalletBusy(false); }
-  }, [data?.runtime.mode, getConnector, notify, refresh]);
+  }, [data?.runtime.mode, getConnector, notify, readOnly, refresh]);
 
   const disconnect = useCallback(async () => {
-    await api("/session", { method: "DELETE" });
+    if (!readOnly) await api("/session", { method: "DELETE" });
     if (connector.current) await connector.current.disconnect();
-    await refresh(); notify("Signed out.");
-  }, [refresh, notify]);
+    setWalletAccount(null);
+    if (!readOnly) await refresh();
+    notify("Signed out.");
+  }, [readOnly, refresh, notify]);
 
   const complete = useCallback(async <T,>(operationId: string, transactionHash: string) => {
     const confirmed = await api<T>("/transactions/confirm", {
@@ -127,9 +138,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
     return response;
   }, [complete, data?.runtime, data?.session, getConnector, notify, pendingOperation, refresh]);
 
-  return <Context.Provider value={{ data, loading, error, walletBusy, refresh, connect, disconnect, mutate, notify, pendingOperation, confirmPending }}>
+  return <Context.Provider value={{ data, loading, error, walletBusy, walletAccount, refresh, connect, disconnect, mutate, notify, pendingOperation, confirmPending }}>
     {children}
-    {data?.runtime.mode === "testnet" && pendingOperation && <PendingTransaction
+    {data?.runtime.mode === "testnet" && !readOnly && pendingOperation && <PendingTransaction
       confirm={confirmPending}
       discard={() => { sessionStorage.removeItem(pendingStorageKey); setPendingOperation(null); }}
     />}

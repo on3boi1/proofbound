@@ -90,3 +90,35 @@ test("the credit demo refuses further escrow after its persistent budget or cred
     store.close();
   }
 });
+
+test("the hosted testnet gateway blocks writes and reads only the fixed finalized contract", async t => {
+  const previousMode = process.env.PROOFBOUND_PUBLIC_TESTNET;
+  process.env.PROOFBOUND_PUBLIC_TESTNET = "1";
+  t.after(() => {
+    if (previousMode === undefined) delete process.env.PROOFBOUND_PUBLIC_TESTNET;
+    else process.env.PROOFBOUND_PUBLIC_TESTNET = previousMode;
+  });
+  const rpc = t.mock.method(globalThis, "fetch", async (url: string, options: RequestInit) => {
+    const call = JSON.parse(String(options.body));
+    assert.equal(call.method, "query");
+    assert.deepEqual(call.params, {
+      request_type: "call_function", finality: "final",
+      account_id: "contract.proofbound-dev-2026.testnet", method_name: "get_agent",
+      args_base64: btoa('{"token_id":"1"}'),
+    });
+    if (url === "https://test.rpc.fastnear.com") return new Response(null, { status: 503 });
+    assert.equal(url, "https://rpc.testnet.near.org");
+    return Response.json({ result: { result: Array.from(new TextEncoder().encode("null")) } });
+  });
+  const route = (handler: typeof GET, method: string, path: string) => {
+    const url = new URL("https://demo.example/api/" + path + "?receiver=other.testnet");
+    return handler(Object.assign(new Request(url, { method }), { nextUrl: url }) as Parameters<typeof GET>[0], {
+      params: Promise.resolve({ path: path.split("/") }),
+    });
+  };
+  assert.equal((await route(POST, "POST", "jobs")).status, 503);
+  assert.equal((await route(GET, "GET", "health")).status, 404);
+  assert.equal(rpc.mock.callCount(), 0);
+  assert.equal((await route(GET, "GET", "agents/1")).status, 404);
+  assert.equal(rpc.mock.callCount(), 2);
+});

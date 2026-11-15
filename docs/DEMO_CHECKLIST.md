@@ -4,7 +4,8 @@
 - [x] Run the verified local lifecycle with three independent customers.
 - [x] Verify a capped live Research Agent response.
 - [x] Exercise local mint, activation and personal work in Chrome.
-- [ ] Record screenshots/video of final demo flow for submission.
+- [x] Capture public homepage, live Atlas profile, and Atlas Passport.
+- [x] Attach the narrated walkthrough to the [published demo post](https://x.com/on3boi_1/status/2121754200661262588).
 - [x] Deploy the approved testnet contract and verify the deployment receipt, code, balances and roles.
 - [x] Prepare two restricted service credentials locally and verify the unsigned account setup.
 - [x] Provision the approved restricted service roles and verify final receipts, balances and permissions.
@@ -15,6 +16,8 @@
 - [x] Capture finalized activation and verify both testnet quotes.
 - [x] Walk through Atlas in the Chrome marketplace and its public profile.
 - [ ] Capture private research, paid hire, settlement with Earn-to-Refill, and transfer evidence.
-- [ ] Approve implementation push to the public repository.
-- [ ] Human publishes X demo with an authentic video, event name and tags.
+- [x] Publish reviewed implementation to the public hackathon branch and verify its commit.
+- [x] Open the public testnet marketplace in Chrome and an independent browser session.
+- [x] Original demo is public on X and includes the event name, account tag and hashtag.
+- [x] Verify the [stable public demo](https://tryproofbound.pages.dev/) after stopping local frontend previews and the retired tunnel.
 - [ ] Confirm team details, mainnet payout account and contact consent. Review live rules and exact payload.

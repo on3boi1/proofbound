@@ -1,6 +1,8 @@
 import { ProductPage } from "@/components/product";
 import { BRAND } from "@/lib/brand";
+import { siteMetadata } from "@/lib/site-metadata";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 type PageProps = { params: Promise<{ route: string[] }> };
 
@@ -24,10 +26,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? { title: "Job Receipt", description: "Inspect the research report, resource usage, and settlement evidence for a job." }
     : routes[route[0]];
   const { title, description } = page ?? { title: "Page not found", description: BRAND.description };
-  return { title, description, openGraph: { title, description, siteName: BRAND.name, type: "website" } };
+  return { title, description, ...siteMetadata(`/${route.map(encodeURIComponent).join("/")}`, title, description) };
 }
 
 export default async function Page({ params }: PageProps) {
   const { route } = await params;
+  if (!Object.hasOwn(routes, route[0])) notFound();
   return <ProductPage route={route} />;
 }

@@ -2,7 +2,8 @@ import { isIP } from "node:net";
 import {
   isPublicWorkerRoute, isWorkerProxyToken, MAX_WORKER_BODY_BYTES, WORKER_CLIENT_HEADER, WORKER_PROXY_HEADER,
 } from "@proofbound/shared/worker-api";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server.js";
+import { servePublicTestnet } from "../../../lib/public-testnet.ts";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -41,6 +42,7 @@ async function proxy(request: NextRequest, context: { params: Promise<{ path: st
   const { path } = await context.params;
   const pathname = `/api/${path.map(encodeURIComponent).join("/")}`;
   const method = request.method;
+  if (process.env.PROOFBOUND_PUBLIC_TESTNET === "1") return servePublicTestnet(method, pathname);
   try {
     const worker = new URL(process.env.PROOFBOUND_WORKER_URL || "http://127.0.0.1:3001");
     const onVercel = process.env.VERCEL === "1";

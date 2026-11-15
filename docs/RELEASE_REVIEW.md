@@ -1,8 +1,29 @@
 # Release review
 
-GitHub reports that `on3boi1/proofbound` is public. Remote `main` points to `7ae2207a034bcaa4fec6e6c6a0a02b797c389e7c`. GitHub rejected the authorized push of `176672c` with `GH007` because the unpublished commit metadata uses a private email address. The remote hackathon branch was absent before the push and the server declined to create it.
+## Public testnet demo
 
-The local branch `codex/proofbound-public-review` uses the repository owner's GitHub no-reply email. Its first nine unpublished commits preserve the reviewed trees, messages and timestamps. The release adds activation evidence and the secured tunnel configuration. Approve the exact new head before pushing it to `refs/heads/codex/proofbound-hackathon`. Verify the published branch and use its direct link in the demo.
+The [public site](https://tryproofbound.pages.dev/) uses Cloudflare Pages Free, project `tryproofbound`. It serves the Next.js App Router through vinext and reads finalized NEAR testnet data directly. Atlas #1, its profile and Passport work with the Windows frontend and tunnel stopped. Public execution, authenticated worker sessions and transactions are offline. [Production checks and deployment ID](evidence/cloudflare-frontend-deployment.json)
+
+The [original hackathon commit](https://github.com/on3boi1/proofbound/tree/be6a2193daa01c998647660741ef4418d6e34e72) remains available for review. The Pages move is a post-deadline hosting update. The [original demo post](https://x.com/on3boi_1/status/2121754200661262588) and [historical tunnel evidence](evidence/public-demo-deployment.json) document the earlier release.
+
+### Reproduce the Pages build
+
+Run `npm ci` from the repository root, followed by:
+
+```sh
+npm run pages:build --workspace @proofbound/web
+npm run pages:preview --workspace @proofbound/web -- --ip 127.0.0.1
+```
+
+The build stages the frontend Worker and static files under `.data/cloudflare-pages/output`. The config in `apps/web/cloudflare-pages/wrangler.jsonc` fixes the public origin and read-only mode in the artifact. The public site uses same-origin `/api` reads and public NEAR testnet RPC. Cloudflare requires only the public configuration in the Pages build. After a reviewed release and deploy approval, publish with `npm run pages:deploy --workspace @proofbound/web -- --project-name tryproofbound --branch codex/proofbound-hackathon`.
+
+## Publication record
+
+The initial hackathon publication used GitHub's no-reply address and published `be6a2193daa01c998647660741ef4418d6e34e72`. The original remote `main` remains at `7ae2207a034bcaa4fec6e6c6a0a02b797c389e7c`. Open the [hackathon branch](https://github.com/on3boi1/proofbound/tree/codex/proofbound-hackathon) for the implementation.
+
+## Optional hosted configuration under review
+
+The configuration below was evaluated for a separate authenticated execution deployment. The current Pages release uses only public testnet reads.
 
 | Target | Settings to apply after approval |
 |---|---|
@@ -14,7 +35,9 @@ Render Free discards local SQLite on restart, idle spin-down and redeploy. SQLit
 
 Vercel can build a Git branch preview without a merge if the project already has a deployment. Its first deployment in a new project is classified as Production. Use the exact stable frontend origin for both worker and frontend. Verify access when signed out of Vercel before publishing a link. [Vercel deployment environments](https://vercel.com/docs/deployments/environments#first-deployment) · [Vercel monorepos](https://vercel.com/docs/monorepos)
 
-## Start the free demo
+### Hosted frontend and worker runbook
+
+Use these steps only after a hosted deployment is approved. For judging, use the published demo link or the local fixture workflow in the [README](../README.md).
 
 1. After approval, select the exact public Vercel origin. Stop the existing Atlas worker cleanly before starting the replacement on the same port and database. Preserve the SQLite file and its WAL state. Make a local SQLite backup before the demo if copying files while the service runs.
 2. Generate a random 32-byte proxy secret in a password manager as 64 lowercase hexadecimal characters. Store it in the Vercel project as the server-only `PROOFBOUND_WORKER_PROXY_TOKEN` and enter it through the masked prompt for the Windows worker.
@@ -30,4 +53,4 @@ Vercel can build a Git branch preview without a merge if the project already has
 
 Quick Tunnels are for temporary testing and development. They have no uptime guarantee, cap requests at 200 in flight, and assign a new URL each time the connector starts. Update the Vercel worker URL and redeploy when it changes. The frontend remains available when the Windows PC sleeps or goes offline. Wallet sessions, new work, and evidence that lives in SQLite require a running worker. If the PC goes down mid-job, preserve the database and inspect the chain before resuming. Customers can expire unsettled jobs after the onchain deadline under the contract's refund rules. [Cloudflare Quick Tunnels](https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/)
 
-The official deadline is **November 14 at 23:59 UTC**. The human publishes the demo on X. Submit once after the human confirms the exact JSON, verified public repository link and public X link. The submission needs the team lead, contact email, team size, tracks, verified mainnet payout ID, description and the required contact consent. [Official rules](https://nearhackathon.com/HACKATHON.md)
+The original deadline was **November 14 at 23:59 UTC**. The [demo is published on X](https://x.com/on3boi_1/status/2121754200661262588). Updates to an existing submission go through the organizer's [change request form](https://nearhackathon.com/request-changes). Published code and demo evidence are listed in the [submission review](SUBMISSION_REVIEW.md).

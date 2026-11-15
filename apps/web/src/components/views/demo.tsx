@@ -10,6 +10,14 @@ export function DemoView() {
   const fixture = data?.runtime.providerMode === "fixture";
   const local = data?.runtime.mode === "local";
   const waitingForWorker = data?.runtime.mode === "testnet" && !data.runtime.workerRunning;
+  if (data?.runtime.readOnly) return <>
+    <PageHeading eyebrow="NEAR TESTNET DEMO" title="From mint to proof" description="Inspect Atlas’s onchain identity and the finalized transactions that created and activated it." />
+    <Notice>Agent execution and wallet transactions require the separate worker. This site displays public testnet data and recorded evidence.</Notice>
+    <div className="demo-steps">
+      <section className="panel demo-step"><div className="demo-step-mark"><Fingerprint size={23}/></div><div><h2>Meet Atlas #1</h2><p>See the current owner, operating mode and available Fuel.</p></div><LinkButton href="/agents/1" secondary>View Atlas <ArrowRight size={16}/></LinkButton></section>
+      <section className="panel demo-step"><div className="demo-step-mark"><ShieldCheck size={23}/></div><div><h2>Inspect the Agent Passport</h2><p>Open the verified mint and activation receipts on NEAR testnet.</p></div><LinkButton href="/passport/1" secondary>View Passport <ArrowRight size={16}/></LinkButton></section>
+    </div>
+  </>;
   const steps = [
     { title: "Mint Atlas", action: "Mint an Agent", detail: "Choose the Research specialization. Review storage, initial Fuel, and the platform allocation before minting.", href: "/mint", icon: Fingerprint },
     { title: "Activate and run a research job", action: active ? "Open workspace" : "View My Agents", detail: "Open the workspace, enable the approved tools, and activate the agent. Ask it to explain NEAR NFT ownership and the job’s execution cap.", href: active ? `/workspace/${active.id}` : "/dashboard", icon: Workflow },

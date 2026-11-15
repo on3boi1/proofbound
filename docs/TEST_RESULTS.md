@@ -1,6 +1,6 @@
 # Test results
 
-November 14, 2026.
+Updated November 15, 2026.
 
 | Check | Result |
 |---|---|
@@ -24,7 +24,9 @@ November 14, 2026.
 | Missing-job trap reproduction | The Rust host test verified the `Unknown job` panic and unchanged job/Fuel state. Running the exact deployed WASM with the finalized contract root state and executor predecessor reproduced the `unreachable` trap immediately after the missing job lookup, with zero state writes. The chain receipt did not expose the panic text. |
 | Customer wallet and Chrome | `proofbound.testnet` had 0.50 testnet NEAR and one FullAccess key distinct from the developer's at block 277680701. Chrome reached Meteor Web approval from the real testnet selector at `/explore`. Customer-side message signing and authenticated session are pending. |
 | Zero-cost worker gateway | Four app tests and both workspace type checks passed. The gateway tests covered direct tunnel-style access denial, route restrictions, mismatched origins, 16 KiB request bounds, rate limits, and a normalized 503 for an unavailable worker. The credit budget rejects new escrow after exhaustion. |
-| Zero-cost preview browser QA | Production build passed. Chrome loaded real testnet Atlas through the authenticated local proxy. An independent browser session with an offline worker displayed an unavailable message and retry controls. Public tunnel and Vercel checks await deployment approval. |
+| Former public frontend | On November 14, the temporary HTTPS tunnel served Next.js production. Chrome and an independent browser showed active Atlas #1 from testnet. Anonymous jobs and mismatched origins were rejected. Developer NEP-413 sign-in and logout passed. The expired tunnel was retired on November 15. [Historical checks](evidence/public-demo-deployment.json) |
+| Cloudflare Pages production | The standard Next.js and Pages builds succeeded. All 30 contract tests and five app tests passed. Chrome and an independent browser loaded the hosted marketplace, Atlas profile and both finalized Passport receipts. Mobile navigation worked at 390px with no horizontal overflow in the marketplace. Meteor connected `proofbound.testnet` for public roster viewing. Favicon, touch icon and manifest returned HTTP 200. Canonical and social metadata point to the branded Pages origin. The public API continued to return Atlas #1 and 100,000 Fuel with the local frontend processes and original tunnel stopped. Write routes returned 503. Health, administrative, environment, database and private Worker bundle paths returned 404. A scan of 35 Pages build files found no supported credential patterns or protected paths. [Deployment evidence](evidence/cloudflare-frontend-deployment.json) |
+| Worker availability | A separate local production instance with the worker offline displayed an unavailable message and retry controls in an independent browser. The gateway regression returned 503. The live demo has job execution paused. |
 | Local production preview | Next.js production build passed. Landing, demo, marketplace, favicon, SVG, Apple icon and manifest returned HTTP 200. The production frontend proxy returned the real testnet contract and zero agents, with the worker disabled. The two existing app tests also passed. |
 
 Commands are listed in [README.md](../README.md). On the managed Windows host, the HTTP test required loopback permission. The default sandbox denied the connection before any integration assertions ran.
